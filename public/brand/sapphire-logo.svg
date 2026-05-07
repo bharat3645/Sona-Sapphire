@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Sona Sapphire diamond mark">
+  <defs>
+    <linearGradient id="g-blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5AB0FF"/>
+      <stop offset="0.55" stop-color="#2E6BE6"/>
+      <stop offset="1" stop-color="#0B1B3A"/>
+    </linearGradient>
+    <linearGradient id="g-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F2C66B"/>
+      <stop offset="1" stop-color="#A2761B"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path d="M8 22 L32 6 L56 22 L32 60 Z" fill="url(#g-blue)" stroke="url(#g-gold)" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M14 22 L32 12 L50 22 L32 50 Z" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+    <path d="M14 22 H50" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+    <text x="32" y="38" text-anchor="middle" font-family="Anton, Impact, sans-serif" font-size="22" fill="url(#g-gold)" font-weight="700">S</text>
+  </g>
+</svg>
