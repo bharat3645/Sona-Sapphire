@@ -5,6 +5,8 @@ export interface ReelDef {
   readonly label: string;
   readonly tag: string;
   readonly client: string;
+  readonly format: string;
+  readonly tc: string;
   readonly parallax: number;
 }
 
@@ -40,13 +42,7 @@ const UNS = (id: string, w = 1920) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
 
 /* ────────────────────────────────────────────────────────────────────────── */
-/*  Reels                                                                     */
-/*                                                                            */
-/*  Each reel slot represents one practice the agency runs. We use            */
-/*  cinematic Unsplash imagery (with a subtle Ken-Burns slow-zoom) so the     */
-/*  hero is never empty and every frame is visibly on-brand. When real        */
-/*  client cuts are ready, set `src` on a reel to the MP4 URL and the         */
-/*  player will overlay the still — no other code change required.            */
+/*  Reels — service-themed cinematic stills with film-slate metadata         */
 /* ────────────────────────────────────────────────────────────────────────── */
 
 export const REELS: readonly ReelDef[] = [
@@ -54,24 +50,30 @@ export const REELS: readonly ReelDef[] = [
     id: "reel-1",
     poster: UNS("1485846234645-a62644f84728"),
     label: "Cinematic Brand Films",
-    tag: "Reel 01 · Advertisement Videos",
-    client: "School ads · Business promos · Reels",
+    tag: "Reel 01 · Advertisement",
+    client: "School ads · Promos · Reels",
+    format: "4K · 2.35:1 · 24p",
+    tc: "01:00:14:08",
     parallax: 0.16,
   },
   {
     id: "reel-2",
     poster: UNS("1611162616475-46b635cb6868"),
     label: "Social, At Scale",
-    tag: "Reel 02 · Social Media Handling",
+    tag: "Reel 02 · Social Handling",
     client: "Instagram · Facebook · YouTube",
+    format: "9:16 · 30p · Native",
+    tc: "01:00:38:21",
     parallax: 0.22,
   },
   {
     id: "reel-3",
     poster: UNS("1551836022-deb4988cc6c0"),
     label: "Sites That Convert",
-    tag: "Reel 03 · Website Development",
-    client: "Business sites · Landing pages · Software",
+    tag: "Reel 03 · Web Development",
+    client: "Business sites · Funnels · Software",
+    format: "Web · 16:9 · 60fps",
+    tc: "01:01:02:12",
     parallax: 0.28,
   },
   {
@@ -79,7 +81,9 @@ export const REELS: readonly ReelDef[] = [
     poster: UNS("1525909002-1b05e0c869d8"),
     label: "Brand Systems",
     tag: "Reel 04 · Brand Development",
-    client: "Identity · Messaging · Launch playbooks",
+    client: "Identity · Voice · Launch",
+    format: "Print · Digital · Motion",
+    tc: "01:01:26:04",
     parallax: 0.32,
   },
 ] as const;
@@ -168,53 +172,22 @@ export const SERVICES: readonly ServiceDef[] = [
 ] as const;
 
 /* ────────────────────────────────────────────────────────────────────────── */
-/*  Process                                                                   */
+/*  Process / Stats / Editorial / Contact                                     */
 /* ────────────────────────────────────────────────────────────────────────── */
 
 export const PROCESS: readonly ProcessStep[] = [
-  {
-    index: 1,
-    title: "Diagnose",
-    body:
-      "We map the funnel — where attention enters, where it stalls, where revenue actually closes — before a single frame is shot.",
-  },
-  {
-    index: 2,
-    title: "Direct",
-    body:
-      "Concept, script, storyboard. A single creative director on every project, briefed on the metric we're moving.",
-  },
-  {
-    index: 3,
-    title: "Deliver",
-    body:
-      "Cinematic production + paid distribution + content engines — running on a weekly drumbeat, not a quarterly campaign.",
-  },
-  {
-    index: 4,
-    title: "Defend",
-    body:
-      "Test, learn, and compound. Every win turns into a system we hand back to your team, with documentation and dashboards.",
-  },
+  { index: 1, title: "Diagnose", body: "We map the funnel — where attention enters, where it stalls, where revenue actually closes — before a single frame is shot." },
+  { index: 2, title: "Direct",   body: "Concept, script, storyboard. A single creative director on every project, briefed on the metric we're moving." },
+  { index: 3, title: "Deliver",  body: "Cinematic production + paid distribution + content engines — running on a weekly drumbeat, not a quarterly campaign." },
+  { index: 4, title: "Defend",   body: "Test, learn, and compound. Every win turns into a system we hand back to your team, with documentation and dashboards." },
 ] as const;
-
-/* ────────────────────────────────────────────────────────────────────────── */
-/*  Stats                                                                     */
-/* ────────────────────────────────────────────────────────────────────────── */
 
 export const STATS: readonly StatDef[] = [
   { target: 120, label: "Projects shipped" },
-  { target: 48, label: "Active clients" },
+  { target: 48,  label: "Active clients" },
   { target: 600, label: "Reels produced", suffix: "+" },
   { target: 320, label: "Avg. growth", suffix: "%" },
 ] as const;
-
-/* ────────────────────────────────────────────────────────────────────────── */
-/*  Editorial copy                                                            */
-/* ────────────────────────────────────────────────────────────────────────── */
-
-export const HERO_TAGLINE =
-  "A creative-and-growth studio for brands that refuse the average. Cinematic ads, social systems, websites, and brand — built end to end.";
 
 export const ABOUT_BODY =
   "Sona Sapphire is a creative-and-growth studio working at the intersection of cinema and analytics. We pair frame-perfect storytelling with the operating systems — funnels, content engines, websites — that turn attention into revenue.";
@@ -234,14 +207,10 @@ export const MARQUEE: readonly string[] = [
   "Social at Scale",
 ];
 
-/* ────────────────────────────────────────────────────────────────────────── */
-/*  Contact                                                                   */
-/* ────────────────────────────────────────────────────────────────────────── */
-
 export const SOCIALS: readonly SocialDef[] = [
   { label: "Instagram", handle: "@sonasapphire", href: "https://instagram.com" },
-  { label: "YouTube", handle: "/sonasapphire", href: "https://youtube.com" },
-  { label: "LinkedIn", handle: "Sona Sapphire", href: "https://linkedin.com" },
+  { label: "YouTube",   handle: "/sonasapphire",  href: "https://youtube.com" },
+  { label: "LinkedIn",  handle: "Sona Sapphire",  href: "https://linkedin.com" },
 ] as const;
 
 export const CONTACT = {

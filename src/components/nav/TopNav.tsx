@@ -11,15 +11,18 @@ const LINKS = [
 export function TopNav() {
   return (
     <header className="nav">
-      <Link href="/" className="nav__brand" aria-label="Sona Sapphire — Home">
-        <Image
-          src="/brand/sapphire-logo.svg"
-          alt=""
-          width={32}
-          height={32}
-          className="nav__brand-mark"
-          priority
-        />
+      <Link
+        href="/"
+        className="nav__brand"
+        aria-label="Sona Sapphire — Home"
+        data-string="magnetic"
+        data-string-id="nav-brand"
+        data-string-strength="0.18"
+        data-string-radius="120"
+      >
+        <span className="logo-gem nav__brand-mark" aria-hidden="true">
+          <Image src="/brand/sapphire-emblem.png" alt="" width={140} height={140} />
+        </span>
         <span className="nav__brand-name">
           Sona <b>Sapphire</b>
         </span>

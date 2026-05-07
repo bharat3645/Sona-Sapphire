@@ -15,7 +15,6 @@ export function VideoStackItem({ reel, index, priority = false }: Props) {
   const styleVars = { "--i": index } as CSSProperties & Record<"--i", number>;
   const ref = useRef<HTMLVideoElement>(null);
 
-  // If a video src is set on this reel, kick play() once metadata is ready.
   useEffect(() => {
     const v = ref.current;
     if (!v || !reel.src) return;
@@ -26,22 +25,18 @@ export function VideoStackItem({ reel, index, priority = false }: Props) {
   }, [reel.src]);
 
   return (
-    <div
-      className="stack-item"
-      style={styleVars}
-      data-string="parallax"
-      data-string-id={`stack-parallax-${reel.id}`}
-      data-string-parallax={reel.parallax}
-    >
-      <div className="stack-item__poster" data-burn={index}>
-        <Image
-          src={reel.poster}
-          alt=""
-          fill
-          sizes="100vw"
-          priority={priority}
-        />
+    <div className="stack-item" style={styleVars}>
+      {/* Layer 1 — poster (slowest parallax) */}
+      <div
+        className="stack-item__poster"
+        data-burn={index}
+        data-string="parallax"
+        data-string-id={`reel-poster-${reel.id}`}
+        data-string-parallax={reel.parallax}
+      >
+        <Image src={reel.poster} alt="" fill sizes="100vw" priority={priority} />
       </div>
+
       {reel.src ? (
         <video
           ref={ref}
@@ -58,19 +53,47 @@ export function VideoStackItem({ reel, index, priority = false }: Props) {
           aria-label={reel.label}
         />
       ) : null}
+
       <div className="stack-item__overlay" aria-hidden="true" />
 
-      <div className="stack-item__index" aria-hidden="true">
-        0{index + 1}
-        <span>Reel · 04</span>
+      {/* Cinematic corner brackets */}
+      <div className="stack-item__brackets" aria-hidden="true">
+        <span className="stack-item__bracket stack-item__bracket--tl" />
+        <span className="stack-item__bracket stack-item__bracket--tr" />
+        <span className="stack-item__bracket stack-item__bracket--bl" />
+        <span className="stack-item__bracket stack-item__bracket--br" />
       </div>
 
-      <figcaption className="stack-item__caption">
+      {/* Layer 2 — reel index (parallax up) */}
+      <div
+        className="stack-item__index"
+        aria-hidden="true"
+        data-string="parallax"
+        data-string-id={`reel-idx-${reel.id}`}
+        data-string-parallax={(0.45 - index * 0.06).toFixed(2)}
+      >
+        <span className="stack-item__index-num">0{index + 1}</span>
+        <span className="stack-item__index-rule" />
+        <span className="stack-item__index-total">04</span>
+      </div>
+
+      {/* Layer 3 — caption (parallax up faster) */}
+      <figcaption
+        className="stack-item__caption"
+        data-string="parallax"
+        data-string-id={`reel-cap-${reel.id}`}
+        data-string-parallax={(0.55 - index * 0.05).toFixed(2)}
+      >
         <span className="stack-item__caption-row">
-          <span>{reel.tag}</span>
+          <span className="stack-item__caption-play" aria-hidden="true">▶</span>
+          <span>Now playing</span>
+          <span className="stack-item__caption-tag">{reel.tag}</span>
         </span>
-        <span className="stack-item__caption-title">{reel.label}</span>
-        <span className="stack-item__caption-meta">{reel.client}</span>
+        <h2 className="stack-item__caption-title">{reel.label}</h2>
+        <div className="stack-item__caption-meta">
+          <span>{reel.client}</span>
+          <span className="stack-item__caption-format">{reel.format}</span>
+        </div>
       </figcaption>
     </div>
   );
