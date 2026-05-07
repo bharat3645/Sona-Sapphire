@@ -15,8 +15,11 @@ jobs:
           version: 10
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec tsc --noEmit
-      - run: pnpm exec next lint
+      - run: pnpm exec eslint .
+      - run: pnpm exec next build
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"

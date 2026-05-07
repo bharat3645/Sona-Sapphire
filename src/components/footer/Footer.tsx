@@ -20,7 +20,7 @@ export function Footer() {
           <span className="footer__eyebrow">Let&rsquo;s talk · IST &amp; everywhere</span>
           <a
             href={CONTACT.emailHref}
-            className="footer__cta font-display"
+            className="footer__cta"
             data-string="magnetic"
             data-string-id="cta"
             data-string-strength="0.55"

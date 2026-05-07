@@ -4,8 +4,8 @@ Cinematic agency site — Next.js (App Router) + StringTune. Dark-mode exclusive
 
 ## Stack
 
-- Next.js 15, React 19, TypeScript (strict)
-- Tailwind CSS 3.4 with CSS variable tokens
+- Next.js 16 (Turbopack), React 19.2, TypeScript 5.9 (strict)
+- Tailwind CSS 4 with CSS-first `@theme` tokens
 - `@fiddle-digital/string-tune` — exclusive scroll/cursor engine
 
 ## Getting started

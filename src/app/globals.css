@@ -1,8 +1,14 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* ─── Brand tokens ──────────────────────────────────────────────────────── */
+/* ─── Theme tokens (Tailwind v4 @theme: generates bg-navy, text-ink, etc.) ─ */
+@theme inline {
+  --color-navy: var(--c-navy);
+  --color-gold: var(--c-gold);
+  --color-diamond: var(--c-blue);
+  --color-ink: var(--c-ink);
+}
+
+/* ─── Brand variables ───────────────────────────────────────────────────── */
 :root {
   --c-navy: #0B1B3A;
   --c-navy-deep: #060F24;
@@ -33,13 +39,12 @@ html {
   scroll-behavior: auto;
 }
 
-/* Make sure the page never flashes white behind the peeled main */
 body {
   background: var(--c-navy-deep);
 }
 
 /* ─── Base type ─────────────────────────────────────────────────────────── */
-.font-display {
+.font-display-face {
   font-family: var(--font-display), system-ui, sans-serif;
   letter-spacing: -0.02em;
 }
@@ -103,7 +108,7 @@ body {
   position: relative;
   height: 400vh;
   background: var(--c-navy);
-  overflow: clip; /* clip — NOT hidden — so sticky still works in modern browsers */
+  overflow: clip;
 }
 
 .stack__wordmark {
@@ -278,7 +283,6 @@ body {
 }
 
 .services__rail {
-  /* StringGlide writes inline horizontal transform here, scaled by data-string-glide */
   display: flex;
   gap: clamp(1rem, 2vw, 2rem);
   padding: 0 clamp(1rem, 3vw, 2.5rem);
@@ -326,7 +330,6 @@ body {
   color: var(--c-ink);
   text-transform: uppercase;
   align-self: end;
-  /* magnetic offset (StringMagnetic emits unitless --magnetic-x/y) */
   transform: translate3d(
     calc(var(--magnetic-x, 0) * 1px),
     calc(var(--magnetic-y, 0) * 1px),
@@ -397,7 +400,6 @@ body {
   color: var(--c-gold);
   font-feature-settings: "tnum";
   font-variant-numeric: tabular-nums;
-  /* fixed-width box prevents CLS during count-up */
   min-width: 4ch;
 }
 
@@ -454,8 +456,6 @@ body {
   padding: clamp(3rem, 6vw, 6rem) clamp(1.25rem, 4vw, 4rem);
   pointer-events: none;
 }
-
-main:has(~ .peel-sentinel) ~ .footer { pointer-events: none; }
 
 .footer__inner {
   display: grid;
