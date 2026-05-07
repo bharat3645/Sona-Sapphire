@@ -1,5 +1,6 @@
 import { TopNav } from "@/components/nav/TopNav";
 import { VideoStack } from "@/components/stack/VideoStack";
+import { Marquee } from "@/components/marquee/Marquee";
 import { ServicesGlide } from "@/components/services/ServicesGlide";
 import { StatsAbout } from "@/components/stats/StatsAbout";
 import { Footer } from "@/components/footer/Footer";
@@ -18,7 +19,9 @@ export default function HomePage() {
       <TopNav />
       <main>
         <VideoStack />
+        <Marquee />
         <ServicesGlide />
+        <Marquee invert />
         <StatsAbout />
       </main>
       <Footer />
