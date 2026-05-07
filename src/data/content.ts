@@ -1,6 +1,6 @@
 export interface ReelDef {
   readonly id: string;
-  readonly src: string;
+  readonly src?: string;
   readonly poster: string;
   readonly label: string;
   readonly tag: string;
@@ -40,45 +40,47 @@ const UNS = (id: string, w = 1920) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
 
 /* ────────────────────────────────────────────────────────────────────────── */
-/*  Reels — Mixkit CC0 streams; posters from Unsplash. Swap by editing src.  */
+/*  Reels                                                                     */
+/*                                                                            */
+/*  Each reel slot represents one practice the agency runs. We use            */
+/*  cinematic Unsplash imagery (with a subtle Ken-Burns slow-zoom) so the     */
+/*  hero is never empty and every frame is visibly on-brand. When real        */
+/*  client cuts are ready, set `src` on a reel to the MP4 URL and the         */
+/*  player will overlay the still — no other code change required.            */
 /* ────────────────────────────────────────────────────────────────────────── */
 
 export const REELS: readonly ReelDef[] = [
   {
     id: "reel-1",
-    src: "https://assets.mixkit.co/videos/4775/4775-720.mp4",
-    poster: UNS("1492691527719-9d1e07e534b4"),
-    label: "Brand Films",
-    tag: "Hero · 2026",
-    client: "D2C · Education · Fintech",
-    parallax: 0.18,
+    poster: UNS("1485846234645-a62644f84728"),
+    label: "Cinematic Brand Films",
+    tag: "Reel 01 · Advertisement Videos",
+    client: "School ads · Business promos · Reels",
+    parallax: 0.16,
   },
   {
     id: "reel-2",
-    src: "https://assets.mixkit.co/videos/41540/41540-720.mp4",
-    poster: UNS("1611162616305-c69b3fa7fbe0"),
-    label: "Performance Ads",
-    tag: "Conversion · Scale",
-    client: "Avg. ROAS lift +320%",
+    poster: UNS("1611162616475-46b635cb6868"),
+    label: "Social, At Scale",
+    tag: "Reel 02 · Social Media Handling",
+    client: "Instagram · Facebook · YouTube",
     parallax: 0.22,
   },
   {
     id: "reel-3",
-    src: "https://assets.mixkit.co/videos/22755/22755-720.mp4",
-    poster: UNS("1540575467063-178a50c2df87"),
-    label: "Social Reels",
-    tag: "IG · YT · FB",
-    client: "600+ shorts shipped",
+    poster: UNS("1551836022-deb4988cc6c0"),
+    label: "Sites That Convert",
+    tag: "Reel 03 · Website Development",
+    client: "Business sites · Landing pages · Software",
     parallax: 0.28,
   },
   {
     id: "reel-4",
-    src: "https://assets.mixkit.co/videos/5060/5060-720.mp4",
-    poster: UNS("1467232004584-a241de8bcf5d"),
-    label: "Product Showcase",
-    tag: "E-comm · D2C",
-    client: "Catalogues · Launches",
-    parallax: 0.34,
+    poster: UNS("1525909002-1b05e0c869d8"),
+    label: "Brand Systems",
+    tag: "Reel 04 · Brand Development",
+    client: "Identity · Messaging · Launch playbooks",
+    parallax: 0.32,
   },
 ] as const;
 
@@ -100,9 +102,9 @@ export const SERVICES: readonly ServiceDef[] = [
       "Cut-downs for every channel",
     ],
     samples: [
-      { src: UNS("1486312338219-ce68d2c6f44d", 900), label: "Education" },
-      { src: UNS("1556761175-5973dc0f32e7", 900), label: "Business" },
-      { src: UNS("1542038784456-1ea8e935640e", 900), label: "Product" },
+      { src: UNS("1485827404703-89b55fcc595e", 900), label: "Set" },
+      { src: UNS("1518929458119-e5bf444c30f4", 900), label: "Lens" },
+      { src: UNS("1517245386807-bb43f82c33c4", 900), label: "Studio" },
     ],
     hue: "ad",
   },
@@ -119,9 +121,9 @@ export const SERVICES: readonly ServiceDef[] = [
       "Community + DM ops",
     ],
     samples: [
-      { src: UNS("1611162616475-46b635cb6868", 900), label: "Instagram" },
-      { src: UNS("1550745165-9bc0b252726f", 900), label: "Engagement" },
-      { src: UNS("1497366216548-37526070297c", 900), label: "Calendar" },
+      { src: UNS("1611162616475-46b635cb6868", 900), label: "Mobile" },
+      { src: UNS("1611605698335-8b1569810432", 900), label: "Reels" },
+      { src: UNS("1611162617213-7d7a39e9b1d7", 900), label: "Channel" },
     ],
     hue: "social",
   },
@@ -138,9 +140,9 @@ export const SERVICES: readonly ServiceDef[] = [
       "Headless commerce",
     ],
     samples: [
-      { src: UNS("1521737604893-d14cc237f11d", 900), label: "Web build" },
-      { src: UNS("1559136555-9303baea8ebd", 900), label: "Product" },
-      { src: UNS("1556745753-b2904692b3cd", 900), label: "E-comm" },
+      { src: UNS("1551434678-e076c223a692", 900), label: "Build" },
+      { src: UNS("1593642632559-0c6d3fc62b89", 900), label: "Code" },
+      { src: UNS("1505740420928-5e560c06d30e", 900), label: "Product" },
     ],
     hue: "web",
   },
@@ -157,9 +159,9 @@ export const SERVICES: readonly ServiceDef[] = [
       "Guidelines & governance",
     ],
     samples: [
-      { src: UNS("1492691527719-9d1e07e534b4", 900), label: "Mark" },
-      { src: UNS("1467232004584-a241de8bcf5d", 900), label: "Tone" },
-      { src: UNS("1540575467063-178a50c2df87", 900), label: "System" },
+      { src: UNS("1581094794329-c8112a89af12", 900), label: "System" },
+      { src: UNS("1559056199-641a0ac8b55e", 900), label: "Studio" },
+      { src: UNS("1496181133206-80ce9b88a853", 900), label: "Print" },
     ],
     hue: "brand",
   },
@@ -180,7 +182,7 @@ export const PROCESS: readonly ProcessStep[] = [
     index: 2,
     title: "Direct",
     body:
-      "Concept, script, and storyboard. A single creative director on every project, briefed on the metric we're moving.",
+      "Concept, script, storyboard. A single creative director on every project, briefed on the metric we're moving.",
   },
   {
     index: 3,

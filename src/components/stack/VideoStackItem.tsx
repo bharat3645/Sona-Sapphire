@@ -15,20 +15,15 @@ export function VideoStackItem({ reel, index, priority = false }: Props) {
   const styleVars = { "--i": index } as CSSProperties & Record<"--i", number>;
   const ref = useRef<HTMLVideoElement>(null);
 
-  // Browsers should autoplay muted+playsinline videos automatically, but
-  // some Chromium and iOS Safari versions stall behind the load event.
-  // This effect issues a play() once the metadata is ready as a safety net.
+  // If a video src is set on this reel, kick play() once metadata is ready.
   useEffect(() => {
     const v = ref.current;
-    if (!v) return;
-    const kick = () => {
-      const p = v.play();
-      if (p && typeof p.catch === "function") p.catch(() => {});
-    };
+    if (!v || !reel.src) return;
+    const kick = () => v.play().catch(() => {});
     if (v.readyState >= 2) kick();
     v.addEventListener("loadedmetadata", kick, { once: true });
     return () => v.removeEventListener("loadedmetadata", kick);
-  }, []);
+  }, [reel.src]);
 
   return (
     <div
@@ -38,28 +33,31 @@ export function VideoStackItem({ reel, index, priority = false }: Props) {
       data-string-id={`stack-parallax-${reel.id}`}
       data-string-parallax={reel.parallax}
     >
-      <Image
-        src={reel.poster}
-        alt=""
-        fill
-        sizes="100vw"
-        className="stack-item__poster"
-        priority={priority}
-      />
-      <video
-        ref={ref}
-        className="stack-item__media"
-        data-string="video-autoplay"
-        data-string-id={`reel-${reel.id}`}
-        src={reel.src}
-        poster={reel.poster}
-        autoPlay
-        muted
-        playsInline
-        loop
-        preload={priority ? "auto" : "metadata"}
-        aria-label={reel.label}
-      />
+      <div className="stack-item__poster" data-burn={index}>
+        <Image
+          src={reel.poster}
+          alt=""
+          fill
+          sizes="100vw"
+          priority={priority}
+        />
+      </div>
+      {reel.src ? (
+        <video
+          ref={ref}
+          className="stack-item__media"
+          data-string="video-autoplay"
+          data-string-id={`reel-${reel.id}`}
+          src={reel.src}
+          poster={reel.poster}
+          autoPlay
+          muted
+          playsInline
+          loop
+          preload={priority ? "auto" : "metadata"}
+          aria-label={reel.label}
+        />
+      ) : null}
       <div className="stack-item__overlay" aria-hidden="true" />
 
       <div className="stack-item__index" aria-hidden="true">
