@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import type { ReelDef } from "@/data/content";
 
 interface Props {
@@ -19,7 +20,15 @@ export function VideoStackItem({ reel, index, priority = false }: Props) {
     >
       <div className="stack-item__scale" style={styleVars}>
         <div className="stack-item__viewport">
-          <div className="stack-item__overlay" aria-hidden="true" />
+          <Image
+            src={reel.poster}
+            alt=""
+            fill
+            sizes="100vw"
+            className="stack-item__poster"
+            priority={priority}
+            unoptimized
+          />
           <video
             className="stack-item__video"
             data-string="video-autoplay"
@@ -32,11 +41,19 @@ export function VideoStackItem({ reel, index, priority = false }: Props) {
             preload={priority ? "auto" : "metadata"}
             aria-label={reel.label}
           />
-          <div className="stack-item__caption">
-            <span>{String(index + 1).padStart(2, "0")} / 04</span>
-            <strong>{reel.label}</strong>
-            <span>{reel.tag}</span>
-          </div>
+          <div className="stack-item__overlay" aria-hidden="true" />
+
+          <span className="stack-item__index" aria-hidden="true">
+            0{index + 1}
+          </span>
+
+          <figcaption className="stack-item__caption">
+            <span className="stack-item__caption-row">
+              <span>{reel.tag}</span>
+            </span>
+            <span className="stack-item__caption-title">{reel.label}</span>
+            <span className="stack-item__caption-meta">{reel.client}</span>
+          </figcaption>
         </div>
       </div>
     </div>

@@ -12,16 +12,14 @@ Cinematic agency site — Next.js (App Router) + StringTune. Dark-mode exclusive
 
 ```bash
 pnpm install
-pnpm fetch:stock      # downloads 4 demo CC0 reels into public/videos/
 pnpm dev              # http://localhost:3000
 ```
 
-## Replacing the demo reels
-
-The kinetic stack reads four files: `public/videos/reel-1.mp4` … `reel-4.mp4`.
-Drop in real client cuts (h.264 720p+ MP4 recommended) with the same filenames — no code changes.
-
-Optional posters: drop matching `reel-N.poster.jpg` next to each MP4.
+The four hero reels stream from the Mixkit CDN (CC0). Posters come from
+Unsplash. To swap in real client cuts, edit `src/data/content.ts` — change
+each `src` to `/videos/your-cut.mp4` and drop the file in `public/videos/`.
+A `pnpm fetch:stock` helper remains in `scripts/` if you want a local
+mirror of the demo clips.
 
 ## Layout map
 

@@ -19,6 +19,7 @@ export function RollingStat({ stat }: Props) {
         aria-label={`${stat.target}${stat.suffix ?? ""} ${stat.label}`}
       />
       <div className="rolling-stat__label">{stat.label}</div>
+      <div className="rolling-stat__bar" aria-hidden="true" />
     </div>
   );
 }

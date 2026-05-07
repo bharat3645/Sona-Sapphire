@@ -15,15 +15,22 @@ export function VideoStack() {
       data-string-exit-vp="top"
       aria-label="Featured work — kinetic reel stack"
     >
-      <div className="stack__hud" aria-hidden="true">
+      <div className="stack__hud">
         <div className="stack__hud-top">
-          <span>Work · 2026</span>
-          <span>Cinematic Reels</span>
+          <span className="stack__hud-badge">Reel · 2026 — Now shipping</span>
+          <span>Sona Sapphire — Global Solutions</span>
         </div>
-        <div />
+
+        <div className="stack__hud-mid">
+          <p className="stack__hud-tagline">
+            A creative-and-growth studio for brands that refuse the average.
+            Cinematic ads, social systems, and websites — built end to end.
+          </p>
+        </div>
+
         <div className="stack__hud-bottom">
-          <span>Scroll to unfurl</span>
-          <span className="stack__hud-counter">04</span>
+          <span className="stack__hud-scroll">Scroll to unfurl</span>
+          <span className="stack__hud-counter">04 reels</span>
         </div>
       </div>
 

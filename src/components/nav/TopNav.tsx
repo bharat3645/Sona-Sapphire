@@ -15,12 +15,14 @@ export function TopNav() {
         <Image
           src="/brand/sapphire-logo.svg"
           alt=""
-          width={28}
-          height={28}
+          width={32}
+          height={32}
           className="nav__brand-mark"
           priority
         />
-        <span>SONA SAPPHIRE</span>
+        <span className="nav__brand-name">
+          Sona <b>Sapphire</b>
+        </span>
       </Link>
 
       <nav className="nav__links" aria-label="Primary">
@@ -30,6 +32,7 @@ export function TopNav() {
             href={l.href}
             className="nav__link"
             data-string="magnetic"
+            data-string-id={`nav-${l.label.toLowerCase()}`}
             data-string-strength="0.25"
             data-string-radius="120"
           >
@@ -37,6 +40,17 @@ export function TopNav() {
           </a>
         ))}
       </nav>
+
+      <a
+        href="#contact"
+        className="nav__cta"
+        data-string="magnetic"
+        data-string-id="nav-cta"
+        data-string-strength="0.35"
+        data-string-radius="160"
+      >
+        Start a project
+      </a>
     </header>
   );
 }
