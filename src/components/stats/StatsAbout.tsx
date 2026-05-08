@@ -17,9 +17,21 @@ export function StatsAbout() {
       aria-label="About and metrics"
     >
       <div className="shell">
-        <span className="eyebrow">About — Sona Sapphire</span>
+        <span
+          className="eyebrow"
+          data-string="parallax"
+          data-string-id="about-eyebrow"
+          data-string-parallax="0.14"
+        >
+          About — Sona Sapphire
+        </span>
         <div className="about__head">
-          <blockquote className="about__quote">
+          <blockquote
+            className="about__quote"
+            data-string="parallax"
+            data-string-id="about-quote"
+            data-string-parallax="-0.08"
+          >
             <p>
               We don&rsquo;t decorate brands. We build the <em>system</em> that{" "}
               <em>grows</em> them — and then we hand it back to your team, fully
@@ -27,7 +39,11 @@ export function StatsAbout() {
             </p>
             <span className="about__quote-attr">— {QUOTE.attr}</span>
           </blockquote>
-          <div>
+          <div
+            data-string="parallax"
+            data-string-id="about-side"
+            data-string-parallax="0.1"
+          >
             <p className="about__body">{ABOUT_BODY}</p>
             <div className="about__signature">
               <span className="logo-gem about__signature-mark" aria-hidden="true">
@@ -50,8 +66,14 @@ export function StatsAbout() {
         </div>
 
         <div className="process" aria-label="How we work">
-          {PROCESS.map((p) => (
-            <div key={p.index} className="process__step">
+          {PROCESS.map((p, i) => (
+            <div
+              key={p.index}
+              className="process__step"
+              data-string="parallax"
+              data-string-id={`process-${p.index}`}
+              data-string-parallax={(0.04 + i * 0.04).toFixed(2)}
+            >
               <h3 className="process__title">{p.title}</h3>
               <p className="process__body">{p.body}</p>
             </div>

@@ -13,7 +13,13 @@ export function RollingStat({ stat, index }: Props) {
   } as CSSProperties & Record<"--rolled" | "--idx", string | number>;
 
   return (
-    <div className="rolling-stat" style={styleVars}>
+    <div
+      className="rolling-stat"
+      style={styleVars}
+      data-string="parallax"
+      data-string-id={`stat-${index}`}
+      data-string-parallax={(0.05 + index * 0.04).toFixed(2)}
+    >
       <div
         className="rolling-stat__value"
         data-suffix={stat.suffix ?? ""}

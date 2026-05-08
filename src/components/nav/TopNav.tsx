@@ -11,7 +11,15 @@ const LINKS = [
 export function TopNav() {
   return (
     <header className="nav">
-      <Link href="/" className="nav__brand" aria-label="Sona Sapphire — Home">
+      <Link
+        href="/"
+        className="nav__brand"
+        aria-label="Sona Sapphire — Home"
+        data-string="magnetic"
+        data-string-id="nav-brand"
+        data-string-strength="0.18"
+        data-string-radius="120"
+      >
         <span className="logo-gem nav__brand-mark" aria-hidden="true">
           <Image src="/brand/sapphire-gem.png" alt="" width={64} height={64} />
         </span>
@@ -22,7 +30,15 @@ export function TopNav() {
 
       <nav className="nav__links" aria-label="Primary">
         {LINKS.map((l) => (
-          <a key={l.href} href={l.href} className="nav__link">
+          <a
+            key={l.href}
+            href={l.href}
+            className="nav__link"
+            data-string="magnetic"
+            data-string-id={`nav-${l.label.toLowerCase()}`}
+            data-string-strength="0.22"
+            data-string-radius="120"
+          >
             {l.label}
           </a>
         ))}

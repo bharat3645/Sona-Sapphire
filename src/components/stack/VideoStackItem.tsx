@@ -25,11 +25,26 @@ export function VideoStackItem({ reel, index, priority = false }: Props) {
 
       <div className="stack-item__overlay" aria-hidden="true" />
 
-      <figcaption className="stack-item__caption">
+      <figcaption
+        className="stack-item__caption"
+        data-string="parallax"
+        data-string-id={`reel-cap-${reel.id}`}
+        data-string-parallax={(0.45 - index * 0.04).toFixed(2)}
+      >
         <span className="stack-item__caption-tag">{reel.tag}</span>
         <h2 className="stack-item__caption-title">{reel.label}</h2>
         <span className="stack-item__caption-meta">{reel.client}</span>
       </figcaption>
+
+      <span
+        className="stack-item__index"
+        aria-hidden="true"
+        data-string="parallax"
+        data-string-id={`reel-idx-${reel.id}`}
+        data-string-parallax={(0.36 - index * 0.04).toFixed(2)}
+      >
+        0{index + 1}
+      </span>
     </div>
   );
 }

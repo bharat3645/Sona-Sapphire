@@ -24,13 +24,21 @@ export function ServiceRow({ service, defaultOpen = false }: Props) {
         onClick={() => setOpen((o) => !o)}
       >
         <span className="service-row__index">{idx}</span>
-        <span className="service-row__title">{service.title}</span>
+        <span
+          className="service-row__title"
+          data-string="magnetic"
+          data-string-id={`svc-title-${service.hue}`}
+          data-string-strength="0.18"
+          data-string-radius="220"
+        >
+          {service.title}
+        </span>
         <span
           className="service-row__plus"
           aria-hidden="true"
           data-string="magnetic"
           data-string-id={`svc-plus-${service.hue}`}
-          data-string-strength="0.4"
+          data-string-strength="0.45"
           data-string-radius="100"
         />
       </button>
@@ -63,11 +71,14 @@ export function ServiceRow({ service, defaultOpen = false }: Props) {
           </div>
 
           <div className="service-row__samples">
-            {service.samples.map((s) => (
+            {service.samples.map((s, i) => (
               <div
                 key={s.src}
                 className="service-row__sample"
                 data-label={s.label}
+                data-string="parallax"
+                data-string-id={`svc-${service.hue}-sample-${i}`}
+                data-string-parallax={(0.08 + i * 0.06).toFixed(2)}
               >
                 <Image
                   src={s.src}

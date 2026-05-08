@@ -1,20 +1,15 @@
 import { REELS } from "@/data/content";
 import { VideoStackItem } from "./VideoStackItem";
+import { StackProgress } from "./StackProgress";
 
 export function VideoStack() {
   return (
     <section
       id="work"
       className="stack"
-      data-string="progress"
-      data-string-id="stack"
-      data-string-key="--progress"
-      data-string-enter-el=".stack"
-      data-string-enter-vp="bottom"
-      data-string-exit-el=".stack"
-      data-string-exit-vp="top"
       aria-label="Featured work — kinetic reel stack"
     >
+      <StackProgress />
       <div className="stack__sticky">
         <div className="stack__items">
           {REELS.map((reel, idx) => (
@@ -27,7 +22,7 @@ export function VideoStack() {
           ))}
         </div>
 
-        {/* Subtle watermark wordmark — single line, soft tone, no glitchy blend */}
+        {/* Cream watermark wordmark — large, soft, behind the caption */}
         <h1
           className="stack__wordmark"
           aria-label="Sona Sapphire Global Solutions"
@@ -35,13 +30,14 @@ export function VideoStack() {
           Sapphire
         </h1>
 
-        {/* Bottom info bar: reel index + scroll cue */}
+        {/* Bottom info bar: live reel index + scroll cue */}
         <div className="stack__hud">
           <span className="stack__hud-index">
             <span className="stack__hud-index-num">
-              0{Math.min(4, Math.max(1, 1)) /* always start at 01 */}
+              {/* Synthetic reel counter — driven by --progress on .stack via
+                  CSS counter(); mirrors which item is currently sliding up. */}
             </span>
-            <span className="stack__hud-index-total">/ 04</span>
+            <span className="stack__hud-index-label">/ 04 reels</span>
           </span>
           <span className="stack__hud-scroll">Scroll to unfurl</span>
         </div>
