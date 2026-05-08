@@ -176,10 +176,7 @@ a { color: inherit; text-decoration: none; }
 .curtain__emblem-img {
   position: relative; z-index: 1;
   width: 100%; height: auto;
-  /* Lighten blend hides the image's own dark navy so only the gem + gold
-     border + glow composite onto the curtain's deep-sapphire backdrop. */
-  mix-blend-mode: lighten;
-  filter: drop-shadow(0 18px 60px rgba(212,162,76, 0.35));
+  filter: drop-shadow(0 18px 60px rgba(212,162,76, 0.4));
 }
 .curtain__name {
   font-family: var(--font-display), system-ui, sans-serif;
@@ -194,33 +191,33 @@ a { color: inherit; text-decoration: none; }
   50%     { transform: scale(1.04) rotate(2deg); filter: brightness(1.08) drop-shadow(0 0 28px rgba(212,162,76,0.6)); }
 }
 
-/* Reusable: shows just the gem from the emblem PNG (top ~70% of the
-   square image), with a soft gold halo so the logo doesn't look like a
-   pasted screenshot — it composites with the navy/gold language. */
+/* Reusable: square gem (uses the pre-cropped sapphire-gem.png so we don't
+   have to fight CSS for sizing). Soft gold halo, drop shadow, no clipping
+   tricks. */
 .logo-gem {
   position: relative;
-  display: inline-block;
-  width: 32px; aspect-ratio: 1;
-  border-radius: 50%;
-  overflow: hidden;
-  isolation: isolate;
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  aspect-ratio: 1;
   flex: 0 0 auto;
+  isolation: isolate;
 }
 .logo-gem::before {
   content: "";
-  position: absolute; inset: -25%;
-  background: radial-gradient(closest-side, rgba(212,162,76, 0.4), transparent 70%);
-  filter: blur(8px);
+  position: absolute;
+  inset: -22%;
   z-index: 0;
+  background: radial-gradient(closest-side, rgba(212,162,76, 0.45), transparent 70%);
+  filter: blur(10px);
 }
 .logo-gem img {
-  position: relative; z-index: 1;
-  width: 142%; height: 142%;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  object-position: center top;
-  margin: -8% 0 0 -21%;
-  mix-blend-mode: lighten;
-  filter: drop-shadow(0 4px 12px rgba(46,107,230, 0.45));
+  filter: drop-shadow(0 4px 14px rgba(46,107,230, 0.35));
 }
 
 .scroll-bar { position: fixed; inset: 0 auto auto 0; width: 100%; height: 2px; z-index: 60; pointer-events: none; }
@@ -253,8 +250,8 @@ a { color: inherit; text-decoration: none; }
   font-weight: 600; letter-spacing: 0.16em; font-size: 0.7rem;
   text-transform: uppercase; color: var(--c-ink);
 }
-.nav__brand-mark { width: 30px; }
-.nav__brand:hover .logo-gem::before { background: radial-gradient(closest-side, rgba(212,162,76, 0.55), transparent 70%); }
+.nav__brand-mark { width: 32px; }
+.nav__brand:hover .logo-gem::before { background: radial-gradient(closest-side, rgba(212,162,76, 0.6), transparent 70%); }
 .nav__brand b { color: var(--c-gold); font-weight: 600; }
 .nav__links {
   display: flex; justify-content: center; gap: clamp(1rem, 2.5vw, 2.5rem);
@@ -794,7 +791,7 @@ a { color: inherit; text-decoration: none; }
   display: inline-flex; align-items: center; gap: 0.85rem; font-size: 0.66rem;
   letter-spacing: 0.32em; text-transform: uppercase; color: var(--c-gold); margin-top: 1.25rem;
 }
-.about__signature-mark { width: 32px; }
+.about__signature-mark { width: 36px; }
 
 .stats {
   display: grid; grid-template-columns: 1fr;

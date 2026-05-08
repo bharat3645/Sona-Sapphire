@@ -21,7 +21,7 @@ export function TopNav() {
         data-string-radius="120"
       >
         <span className="logo-gem nav__brand-mark" aria-hidden="true">
-          <Image src="/brand/sapphire-emblem.png" alt="" width={140} height={140} />
+          <Image src="/brand/sapphire-gem.png" alt="" width={64} height={64} />
         </span>
         <span className="nav__brand-name">
           Sona <b>Sapphire</b>

@@ -67,10 +67,10 @@ export function StatsAbout() {
             <div className="about__signature">
               <span className="logo-gem about__signature-mark" aria-hidden="true">
                 <Image
-                  src="/brand/sapphire-emblem.png"
+                  src="/brand/sapphire-gem.png"
                   alt=""
-                  width={140}
-                  height={140}
+                  width={72}
+                  height={72}
                 />
               </span>
               <span>Built in India · Working worldwide</span>
