@@ -19,9 +19,8 @@ export default function HomePage() {
       <TopNav />
       <main>
         <VideoStack />
-        <Marquee />
         <ServicesGlide />
-        <Marquee invert />
+        <Marquee />
         <StatsAbout />
       </main>
       <Footer />

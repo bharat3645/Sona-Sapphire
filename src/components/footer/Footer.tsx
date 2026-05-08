@@ -1,5 +1,4 @@
 import { CONTACT, SOCIALS } from "@/data/content";
-import { SplitText } from "@/components/text/SplitText";
 
 export function Footer() {
   return (
@@ -29,46 +28,18 @@ export function Footer() {
             className="footer__cta"
             data-string="magnetic"
             data-string-id="cta"
-            data-string-strength="0.55"
-            data-string-radius="260"
+            data-string-strength="0.5"
+            data-string-radius="240"
           >
-            <SplitText
-              text="Let's"
-              mode="char"
-              stagger={0.04}
-              delay={0}
-              progressId="cta-1"
-            />
-            <span className="footer__cta-space"> </span>
-            <SplitText
-              text="Build"
-              mode="char"
-              stagger={0.04}
-              delay={0}
-              progressId="cta-2"
-            />
+            Let&rsquo;s Build
           </a>
 
           <div className="footer__lines">
-            <a
-              href={CONTACT.phoneHref}
-              className="footer__line"
-              data-string="magnetic"
-              data-string-id="line-phone"
-              data-string-strength="0.18"
-              data-string-radius="180"
-            >
+            <a href={CONTACT.phoneHref} className="footer__line">
               <span className="footer__line-label">Call · WhatsApp</span>
               <span className="footer__line-value">{CONTACT.phone}</span>
             </a>
-            <a
-              href={CONTACT.emailHref}
-              className="footer__line"
-              data-string="magnetic"
-              data-string-id="line-email"
-              data-string-strength="0.18"
-              data-string-radius="180"
-            >
+            <a href={CONTACT.emailHref} className="footer__line">
               <span className="footer__line-label">Email</span>
               <span className="footer__line-value">{CONTACT.email}</span>
             </a>
@@ -87,10 +58,6 @@ export function Footer() {
                 href={s.href}
                 target="_blank"
                 rel="noreferrer noopener"
-                data-string="magnetic"
-                data-string-id={`social-${s.label.toLowerCase()}`}
-                data-string-strength="0.3"
-                data-string-radius="120"
               >
                 {s.label} <span aria-hidden="true">↗</span>
               </a>
