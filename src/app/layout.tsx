@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { StringTuneProvider } from "@/components/stringtune/StringTuneProvider";
 import { StructuredData } from "@/components/seo/StructuredData";
 import { CONTACT } from "@/data/content";
@@ -82,6 +84,8 @@ export default function RootLayout({
       </head>
       <body className="min-h-svh bg-navy text-ink antialiased">
         <StringTuneProvider>{children}</StringTuneProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
