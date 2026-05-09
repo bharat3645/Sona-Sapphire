@@ -1,20 +1,12 @@
 import Image from "next/image";
-import { ABOUT_BODY, PROCESS, QUOTE, STATS } from "@/data/content";
-import { RollingStat } from "./RollingStat";
+import { ABOUT_BODY, QUOTE } from "@/data/content";
 
 export function StatsAbout() {
   return (
     <section
       id="about"
       className="about"
-      data-string="progress"
-      data-string-id="stats"
-      data-string-key="--stats"
-      data-string-enter-el=".about"
-      data-string-enter-vp="bottom"
-      data-string-exit-el=".about"
-      data-string-exit-vp="center"
-      aria-label="About and metrics"
+      aria-label="About"
     >
       <div className="shell">
         <span
@@ -57,27 +49,6 @@ export function StatsAbout() {
               <span>Built in India · Working worldwide</span>
             </div>
           </div>
-        </div>
-
-        <div className="stats" aria-label="Key metrics">
-          {STATS.map((s, i) => (
-            <RollingStat key={s.label} stat={s} index={i} />
-          ))}
-        </div>
-
-        <div className="process" aria-label="How we work">
-          {PROCESS.map((p, i) => (
-            <div
-              key={p.index}
-              className="process__step"
-              data-string="parallax"
-              data-string-id={`process-${p.index}`}
-              data-string-parallax={(0.04 + i * 0.04).toFixed(2)}
-            >
-              <h3 className="process__title">{p.title}</h3>
-              <p className="process__body">{p.body}</p>
-            </div>
-          ))}
         </div>
       </div>
     </section>
