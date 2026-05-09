@@ -66,7 +66,10 @@ export function Footer() {
         <div className="footer__meta">
           <span>
             © {new Date().getFullYear()} {CONTACT.legal} · {CONTACT.alt} · Inquiry data
-            is used only to reply to your message — never shared or sold.
+            is used only to reply to your message — never shared or sold. ·{" "}
+            <a href="/privacy" className="footer__meta-link">
+              Privacy
+            </a>
           </span>
           <div className="footer__socials">
             {SOCIALS.map((s) => (
