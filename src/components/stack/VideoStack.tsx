@@ -22,7 +22,6 @@ export function VideoStack() {
           ))}
         </div>
 
-        {/* Cream watermark wordmark — large, soft, behind the caption */}
         <h1
           className="stack__wordmark"
           aria-label="Sona Sapphire Global Solutions"
@@ -30,13 +29,9 @@ export function VideoStack() {
           Sapphire
         </h1>
 
-        {/* Bottom info bar: live reel index + scroll cue */}
         <div className="stack__hud">
           <span className="stack__hud-index">
-            <span className="stack__hud-index-num">
-              {/* Synthetic reel counter — driven by --progress on .stack via
-                  CSS counter(); mirrors which item is currently sliding up. */}
-            </span>
+            <span className="stack__hud-index-num" />
             <span className="stack__hud-index-label">/ 04 reels</span>
           </span>
           <span className="stack__hud-scroll">Scroll to unfurl</span>

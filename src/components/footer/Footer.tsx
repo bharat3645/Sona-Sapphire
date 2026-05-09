@@ -1,4 +1,6 @@
 import { CONTACT, SOCIALS } from "@/data/content";
+import { SocialIcon } from "@/components/social/SocialIcon";
+import { InquiryTrigger } from "@/components/inquiry/InquiryTrigger";
 
 export function Footer() {
   return (
@@ -23,16 +25,17 @@ export function Footer() {
 
         <div className="footer__inner">
           <span className="footer__cta-tag">Drop a line — we reply within 24h</span>
-          <a
-            href={CONTACT.emailHref}
+          <InquiryTrigger
             className="footer__cta"
-            data-string="magnetic"
-            data-string-id="cta"
-            data-string-strength="0.5"
-            data-string-radius="240"
+            dataAttrs={{
+              "data-string": "magnetic",
+              "data-string-id": "cta",
+              "data-string-strength": "0.5",
+              "data-string-radius": "240",
+            }}
           >
             Let&rsquo;s Build
-          </a>
+          </InquiryTrigger>
 
           <div className="footer__lines">
             <a
@@ -48,7 +51,7 @@ export function Footer() {
             </a>
             <a
               href={CONTACT.emailHref}
-              className="footer__line"
+              className="footer__line footer__line--email"
               data-string="magnetic"
               data-string-id="line-email"
               data-string-strength="0.18"
@@ -72,12 +75,14 @@ export function Footer() {
                 href={s.href}
                 target="_blank"
                 rel="noreferrer noopener"
+                aria-label={`${s.label} — ${s.handle}`}
                 data-string="magnetic"
-                data-string-id={`social-${s.label.toLowerCase()}`}
+                data-string-id={`social-${s.kind}`}
                 data-string-strength="0.25"
                 data-string-radius="120"
               >
-                {s.label} <span aria-hidden="true">↗</span>
+                <SocialIcon kind={s.kind} title={s.label} />
+                <span>{s.label}</span>
               </a>
             ))}
           </div>

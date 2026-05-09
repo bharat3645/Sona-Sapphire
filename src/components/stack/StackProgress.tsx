@@ -5,11 +5,12 @@ import { useEffect } from "react";
 /**
  * Writes a 0..1 `--progress` value to the `.stack` element based on its
  * scroll position. Uses requestAnimationFrame to coalesce scroll events
- * and only writes when the value actually changed (to avoid layout thrash).
+ * and only writes when the value actually changed.
  *
- * StringTune's StringProgress is a great general tool but its default
- * timeline geometry on a 400svh sticky container did not consistently
- * scrub from 0 at first paint to 1 at sticky release. This guarantees it.
+ * Range guard: on landscape phones / short windows, `rect.height -
+ * innerHeight` collapses to a tiny number and the scrub becomes erratic.
+ * We floor the range at `innerHeight * 2` so progress always travels a
+ * sensible scroll budget.
  */
 export function StackProgress() {
   useEffect(() => {
@@ -22,7 +23,8 @@ export function StackProgress() {
     const tick = () => {
       raf = 0;
       const rect = stack.getBoundingClientRect();
-      const range = rect.height - window.innerHeight;
+      const naturalRange = rect.height - window.innerHeight;
+      const range = Math.max(naturalRange, window.innerHeight * 2);
       if (range <= 0) {
         if (last !== 0) {
           stack.style.setProperty("--progress", "0");

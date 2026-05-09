@@ -26,7 +26,10 @@ export interface StatDef {
   readonly suffix?: string;
 }
 
+export type SocialKind = "instagram" | "youtube" | "linkedin";
+
 export interface SocialDef {
+  readonly kind: SocialKind;
   readonly label: string;
   readonly handle: string;
   readonly href: string;
@@ -38,16 +41,28 @@ export interface ProcessStep {
   readonly body: string;
 }
 
+export interface WorkTile {
+  readonly id: string;
+  readonly title: string;
+  readonly tag: string;
+  readonly poster: string;
+  readonly href?: string;
+  readonly feature?: boolean;
+  readonly subtitle?: string;
+}
+
 const UNS = (id: string, w = 1920) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
 
 /* ────────────────────────────────────────────────────────────────────────── */
-/*  Reels — service-themed cinematic stills with film-slate metadata         */
+/*  Reels — first two slots wired to client cuts hosted in /public/videos/.   */
+/*  Remaining slots stay image-only until additional cuts arrive.            */
 /* ────────────────────────────────────────────────────────────────────────── */
 
 export const REELS: readonly ReelDef[] = [
   {
     id: "reel-1",
+    src: "/videos/IMG_9966.mp4",
     poster: UNS("1485846234645-a62644f84728"),
     label: "Cinematic Brand Films",
     tag: "Reel 01 · Advertisement",
@@ -58,16 +73,18 @@ export const REELS: readonly ReelDef[] = [
   },
   {
     id: "reel-2",
+    src: "/videos/pal-college.mp4",
     poster: UNS("1611162616475-46b635cb6868"),
-    label: "Social, At Scale",
-    tag: "Reel 02 · Social Handling",
-    client: "Instagram · Facebook · YouTube",
-    format: "9:16 · 30p · Native",
+    label: "PAL College — Long-form",
+    tag: "Reel 02 · Education",
+    client: "Campus film · Profile · Recruitment",
+    format: "1080p · 16:9 · 25fps",
     tc: "01:00:38:21",
     parallax: 0.22,
   },
   {
     id: "reel-3",
+    src: undefined,
     poster: UNS("1551836022-deb4988cc6c0"),
     label: "Sites That Convert",
     tag: "Reel 03 · Web Development",
@@ -78,6 +95,7 @@ export const REELS: readonly ReelDef[] = [
   },
   {
     id: "reel-4",
+    src: undefined,
     poster: UNS("1525909002-1b05e0c869d8"),
     label: "Brand Systems",
     tag: "Reel 04 · Brand Development",
@@ -172,6 +190,54 @@ export const SERVICES: readonly ServiceDef[] = [
 ] as const;
 
 /* ────────────────────────────────────────────────────────────────────────── */
+/*  Work showcase — feature tile is the website work, secondary tiles span    */
+/*  every other practice for visual variety. Lives at the bottom of the page  */
+/*  before the marquee + footer.                                              */
+/* ────────────────────────────────────────────────────────────────────────── */
+
+export const WORK: readonly WorkTile[] = [
+  {
+    id: "feature-web",
+    feature: true,
+    title: "Sites That Convert",
+    subtitle: "Custom Next.js builds · Conversion-instrumented",
+    tag: "Featured · Website",
+    poster: UNS("1551434678-e076c223a692"),
+    href: "#contact",
+  },
+  {
+    id: "work-ad",
+    title: "Brand Films",
+    tag: "Advertisement",
+    poster: UNS("1485827404703-89b55fcc595e", 1200),
+  },
+  {
+    id: "work-social",
+    title: "Social Reels",
+    tag: "Social Media",
+    poster: UNS("1611162616475-46b635cb6868", 1200),
+  },
+  {
+    id: "work-product",
+    title: "Product Showcase",
+    tag: "E-comm",
+    poster: UNS("1525909002-1b05e0c869d8", 1200),
+  },
+  {
+    id: "work-edu",
+    title: "Education",
+    tag: "Long-form",
+    poster: UNS("1486312338219-ce68d2c6f44d", 1200),
+  },
+  {
+    id: "work-brand",
+    title: "Brand Systems",
+    tag: "Identity",
+    poster: UNS("1581094794329-c8112a89af12", 1200),
+  },
+] as const;
+
+/* ────────────────────────────────────────────────────────────────────────── */
 /*  Process / Stats / Editorial / Contact                                     */
 /* ────────────────────────────────────────────────────────────────────────── */
 
@@ -182,10 +248,14 @@ export const PROCESS: readonly ProcessStep[] = [
   { index: 4, title: "Defend",   body: "Test, learn, and compound. Every win turns into a system we hand back to your team, with documentation and dashboards." },
 ] as const;
 
+/**
+ * Stats — three metrics. The "Reels produced 600+" delivery counter was
+ * dropped per direction: it carried a duration implication ("over time")
+ * that the rest of the section avoids.
+ */
 export const STATS: readonly StatDef[] = [
   { target: 120, label: "Projects shipped" },
   { target: 48,  label: "Active clients" },
-  { target: 600, label: "Reels produced", suffix: "+" },
   { target: 320, label: "Avg. growth", suffix: "%" },
 ] as const;
 
@@ -208,10 +278,20 @@ export const MARQUEE: readonly string[] = [
 ];
 
 export const SOCIALS: readonly SocialDef[] = [
-  { label: "Instagram", handle: "@sonasapphire", href: "https://instagram.com" },
-  { label: "YouTube",   handle: "/sonasapphire",  href: "https://youtube.com" },
-  { label: "LinkedIn",  handle: "Sona Sapphire",  href: "https://linkedin.com" },
+  { kind: "instagram", label: "Instagram", handle: "@sonasapphire", href: "https://instagram.com" },
+  { kind: "youtube",   label: "YouTube",   handle: "/sonasapphire",  href: "https://youtube.com" },
+  { kind: "linkedin",  label: "LinkedIn",  handle: "Sona Sapphire",  href: "https://linkedin.com" },
 ] as const;
+
+export const SERVICE_TYPES = [
+  "Advertisement Videos",
+  "Social Media Handling",
+  "Website Development",
+  "Brand Development",
+  "Other",
+] as const;
+
+export type ServiceType = (typeof SERVICE_TYPES)[number];
 
 export const CONTACT = {
   phone: "+91 88818 57060",

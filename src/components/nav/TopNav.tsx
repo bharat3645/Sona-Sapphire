@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { InquiryTrigger } from "@/components/inquiry/InquiryTrigger";
 
 const LINKS = [
   { href: "#work", label: "Work" },
@@ -44,16 +45,17 @@ export function TopNav() {
         ))}
       </nav>
 
-      <a
-        href="#contact"
+      <InquiryTrigger
         className="nav__cta"
-        data-string="magnetic"
-        data-string-id="nav-cta"
-        data-string-strength="0.35"
-        data-string-radius="160"
+        dataAttrs={{
+          "data-string": "magnetic",
+          "data-string-id": "nav-cta",
+          "data-string-strength": "0.35",
+          "data-string-radius": "160",
+        }}
       >
         Start a project
-      </a>
+      </InquiryTrigger>
     </header>
   );
 }

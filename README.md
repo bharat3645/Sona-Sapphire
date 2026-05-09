@@ -7,55 +7,112 @@ Cinematic agency site — Next.js (App Router) + StringTune. Dark-mode exclusive
 - Next.js 16 (Turbopack), React 19.2, TypeScript 5.9 (strict)
 - Tailwind CSS 4 with CSS-first `@theme` tokens
 - `@fiddle-digital/string-tune` — exclusive scroll/cursor engine
+- `resend` — inquiry-mailer
 
 ## Getting started
 
 ```bash
 pnpm install
-pnpm dev              # http://localhost:3000
+cp .env.local.example .env.local      # add your Resend key
+pnpm dev                              # http://localhost:3000
 ```
 
-The four hero reels stream from the Mixkit CDN (CC0). Posters come from
-Unsplash. To swap in real client cuts, edit `src/data/content.ts` — change
-each `src` to `/videos/your-cut.mp4` and drop the file in `public/videos/`.
-A `pnpm fetch:stock` helper remains in `scripts/` if you want a local
-mirror of the demo clips.
+## Reels (videos)
+
+Reels 1 and 2 reference real client cuts hosted in `public/videos/`:
+- `public/videos/IMG_9966.mp4` (reel 01 — advertisement)
+- `public/videos/pal-college.mp4` (reel 02 — long-form / education)
+
+Reels 3 and 4 are image-only until you have more cuts. To wire a video,
+set `reel.src` on the slot in `src/data/content.ts` and drop the MP4 in
+`public/videos/`.
 
 ## Layout map
 
-| Section                    | Component                            | StringTune modules used                              |
-| -------------------------- | ------------------------------------ | ---------------------------------------------------- |
-| Top nav                    | `nav/TopNav.tsx`                     | `StringMagnetic` (subtle pull on links)              |
-| Kinetic stack hero         | `stack/VideoStack.tsx`               | `StringProgress`, `StringParallax`, `StringVideoAutoplay` |
-| Services rail              | `services/ServicesGlide.tsx`         | `StringGlide`, `StringMagnetic`                      |
-| Stats + about              | `stats/StatsAbout.tsx`               | `StringProgress` (drives CSS counter)                |
-| Peeling footer             | `footer/Footer.tsx`                  | `StringProgress`, `StringMagnetic`                   |
+| Section                 | Component                                | StringTune modules used                                 |
+| ----------------------- | ---------------------------------------- | ------------------------------------------------------- |
+| Top nav                 | `nav/TopNav.tsx`                         | `StringMagnetic`                                        |
+| Kinetic stack hero      | `stack/VideoStack.tsx`                   | `StringParallax`, `StringVideoAutoplay`; `--progress` driven by `stack/StackProgress.tsx` |
+| Services accordion      | `services/ServicesGlide.tsx`             | `StringMagnetic`, `StringParallax`                      |
+| About + stats + process | `stats/StatsAbout.tsx`                   | `StringProgress` (counter), `StringParallax`            |
+| Work showcase           | `work/WorkShowcase.tsx`                  | `StringParallax` (per tile)                             |
+| Marquee strip           | `marquee/Marquee.tsx`                    | `StringGlide`                                           |
+| Peeling footer          | `footer/Footer.tsx`                      | `StringProgress` (peel sentinel), `StringMagnetic`      |
+| Inquiry modal           | `inquiry/InquiryDialog.tsx`              | —                                                       |
 
-A single StringTune runtime lives in `components/stringtune/StringTuneProvider.tsx`. The module list is in `modules.ts` — extend there.
+A single StringTune runtime lives in `components/stringtune/StringTuneProvider.tsx`. The module list is in `modules.ts`.
+
+## Inquiry form
+
+`src/app/api/inquiry/route.ts` posts to Resend. Configure in `.env.local`:
+
+```
+RESEND_API_KEY=re_…
+INQUIRY_TO=sonassapphireglobalsolution@gmail.com
+INQUIRY_FROM=Sona Sapphire <onboarding@resend.dev>
+```
+
+The defaults work without a verified domain (Resend's `onboarding@resend.dev`
+is a sandbox sender). For production, verify your sending domain in Resend
+and update `INQUIRY_FROM`.
+
+If `RESEND_API_KEY` is unset, the route returns 503 and the modal surfaces a
+graceful fallback offering the `mailto:` link.
+
+On Vercel: add the same three env vars under Project → Settings → Environment.
 
 ## Tokens
 
-All brand colors are CSS variables on `:root` in `src/app/globals.css`:
-- `--c-navy` Deep Sapphire `#0B1B3A`
-- `--c-gold` Brilliant Gold `#D4A24C`
-- `--c-blue` Diamond Blue `#2E6BE6`
-- `--c-ink`  Warm off-white `#F5EFE0`
+Brand colors and the type scale live as CSS variables on `:root` in
+`src/app/globals.css`:
 
-Tailwind reads them via `theme.extend.colors`.
+```
+--c-navy            #0B1B3A   Deep Sapphire
+--c-gold            #D4A24C   Brilliant Gold
+--c-blue            #2E6BE6   Diamond Blue
+--c-ink             #F5EFE0   Warm off-white
+--type-display-1    clamp(2.6rem, 9vw, 8rem)
+--type-display-2    clamp(2rem, 6.5vw, 5.5rem)
+--type-headline     clamp(1.85rem, 5vw, 4rem)   ← floor 30px so heads never go unreadably small
+--type-lead/body/meta/eyebrow … shared scale
+--space-section / --space-block / --space-stack
+```
+
+## Responsive policy
+
+- **Peel** is a desktop / tablet-portrait luxury — gated behind
+  `@media (min-width: 1024px) and (min-height: 720px) and (pointer: fine)`.
+  Below that, the footer is a normal-flow auto-height block; `<main>` has
+  no transform.
+- **Service samples** reflow 1 → 2 → 3 columns at 480 / 880px.
+- **Stats grid** reflows 1 → 2 → 3 columns (3 stats, "Reels produced 600+"
+  was dropped).
+- **All interactive controls** carry `min-height: 44px` per WCAG 2.5.5.
+- The hero's `StackProgress.tsx` floors its scroll range at
+  `2 * innerHeight` so reel scrub stays smooth on landscape phones.
 
 ## Verification
 
 ```bash
-pnpm typecheck   # tsc --noEmit
-pnpm lint        # next lint
-pnpm build       # prod build
+pnpm typecheck      # tsc --noEmit
+pnpm lint           # eslint .
+pnpm build          # next build
 ```
 
-Manual: scroll the page slowly. Each reel should unfurl (scale 0.86 → 1.0, fade), only the dominant clip plays muted, the SAPPHIRE wordmark stays sticky with `mix-blend-mode: difference`. At the bottom, the body peels up to reveal the gold "Let's Build" footer.
+Manual fluid sweep at 320, 375, 414, 480, 600, 720, 820, 1024, 1180, 1280,
+1440, 1920, 2560 widths. Confirm:
+- Reels 01–04 scrub smoothly.
+- "Let's Build" never crops.
+- Service-row samples remain legible at every width.
+- Stats numbers fit their column.
+- Inquiry modal opens from "Start a project" and "Let's Build" CTAs;
+  Esc / backdrop / × button all close it; submit calls `/api/inquiry`.
 
 ## Reduced motion
 
-`prefers-reduced-motion: reduce` collapses kinetic transforms to opacity-only fades and disables the peel — verified via the media-query block at the bottom of `globals.css`.
+`prefers-reduced-motion: reduce` collapses kinetic transforms to plain
+stacking, freezes the marquee + Ken-Burns animations, and disables the
+peel — see the block at the bottom of `globals.css`.
 
 ## Contact
 

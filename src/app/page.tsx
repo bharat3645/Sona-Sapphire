@@ -3,11 +3,13 @@ import { VideoStack } from "@/components/stack/VideoStack";
 import { Marquee } from "@/components/marquee/Marquee";
 import { ServicesGlide } from "@/components/services/ServicesGlide";
 import { StatsAbout } from "@/components/stats/StatsAbout";
+import { WorkShowcase } from "@/components/work/WorkShowcase";
 import { Footer } from "@/components/footer/Footer";
 import { Curtain } from "@/components/overlays/Curtain";
 import { Grain } from "@/components/overlays/Grain";
 import { ScrollProgress } from "@/components/overlays/ScrollProgress";
 import { Spotlight } from "@/components/overlays/Spotlight";
+import { InquiryDialog } from "@/components/inquiry/InquiryDialog";
 
 export default function HomePage() {
   return (
@@ -20,10 +22,12 @@ export default function HomePage() {
       <main>
         <VideoStack />
         <ServicesGlide />
-        <Marquee />
         <StatsAbout />
+        <WorkShowcase />
+        <Marquee />
       </main>
       <Footer />
+      <InquiryDialog />
     </>
   );
 }
