@@ -156,8 +156,14 @@ Brand colors and the type scale live as CSS variables on `:root` in
 ```bash
 pnpm typecheck      # tsc --noEmit
 pnpm lint           # eslint .
-pnpm build          # next build
+pnpm build          # next build (also runs tsc + lint)
 ```
+
+**On every PR**, Vercel runs `pnpm install --frozen-lockfile` followed by
+`pnpm build` and posts the result as a check. `next build` already runs
+TypeScript validation and ESLint internally, so the Vercel build is the
+single source of truth for "does this PR ship". There's no separate
+GitHub Actions workflow.
 
 Manual fluid sweep at 320, 375, 414, 480, 600, 720, 820, 1024, 1180, 1280,
 1440, 1920, 2560 widths. Confirm:
