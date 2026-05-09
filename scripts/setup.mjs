@@ -31,10 +31,17 @@ const cross = useColor ? "[33m·[0m" : "·";
 console.log("");
 console.log("Sona Sapphire — local setup");
 console.log("───────────────────────────");
-console.log(`${envCreated ? tick : tick} .env.local present (Resend key wired)`);
+console.log(`${envCreated ? tick : tick} .env.local present`);
 console.log(`${hasReel1 ? tick : cross} public/videos/IMG_9966.mp4`);
 console.log(`${hasReel2 ? tick : cross} public/videos/pal-college.mp4`);
 console.log("");
+
+if (envCreated) {
+  console.log("Next: open .env.local and replace RESEND_API_KEY with your");
+  console.log("real key from https://resend.com/api-keys (the file is local-");
+  console.log("only and gitignored, so the key never enters version control).");
+  console.log("");
+}
 
 if (!hasReel1 || !hasReel2) {
   console.log("Reel videos not found locally. Drop the MP4s in public/videos/:");

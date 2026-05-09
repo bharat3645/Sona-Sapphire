@@ -34,7 +34,7 @@ export function WorkTile({ tile, index }: Props) {
         <span className="work-tile__tag">{tile.tag}</span>
         <h3 className="work-tile__title">{tile.title}</h3>
         {tile.subtitle ? <p className="work-tile__subtitle">{tile.subtitle}</p> : null}
-        {tile.feature ? <span className="work-tile__cta">Visit site →</span> : null}
+        {tile.feature ? <span className="work-tile__cta">Brief a build →</span> : null}
       </div>
     </Tag>
   );

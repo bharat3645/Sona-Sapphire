@@ -277,10 +277,15 @@ export const MARQUEE: readonly string[] = [
   "Social at Scale",
 ];
 
+/**
+ * Social profiles. Update the href values once the actual handles are
+ * registered — these point to plausible URLs based on the agency's handle
+ * but should be verified before launch.
+ */
 export const SOCIALS: readonly SocialDef[] = [
-  { kind: "instagram", label: "Instagram", handle: "@sonasapphire", href: "https://instagram.com" },
-  { kind: "youtube",   label: "YouTube",   handle: "/sonasapphire",  href: "https://youtube.com" },
-  { kind: "linkedin",  label: "LinkedIn",  handle: "Sona Sapphire",  href: "https://linkedin.com" },
+  { kind: "instagram", label: "Instagram", handle: "@sonasapphire", href: "https://www.instagram.com/sonasapphire" },
+  { kind: "youtube",   label: "YouTube",   handle: "@sonasapphire", href: "https://www.youtube.com/@sonasapphire" },
+  { kind: "linkedin",  label: "LinkedIn",  handle: "Sona Sapphire", href: "https://www.linkedin.com/company/sona-sapphire" },
 ] as const;
 
 export const SERVICE_TYPES = [
