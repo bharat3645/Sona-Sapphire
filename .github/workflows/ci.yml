@@ -10,9 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # No `version` here — pnpm/action-setup reads packageManager
+      # from package.json (currently pnpm@10.33.0) for an exact match.
+      # Specifying both was causing the v4 self-installer to abort.
       - uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: 22
