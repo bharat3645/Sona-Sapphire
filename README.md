@@ -9,13 +9,59 @@ Cinematic agency site — Next.js (App Router) + StringTune. Dark-mode exclusive
 - `@fiddle-digital/string-tune` — exclusive scroll/cursor engine
 - `resend` — inquiry-mailer
 
-## Getting started
+## Clone-and-go
+
+After `git clone`, exactly three commands:
 
 ```bash
 pnpm install
-cp .env.local.example .env.local      # add your Resend key
-pnpm dev                              # http://localhost:3000
+pnpm setup        # creates .env.local from the committed template (Resend key already baked in)
+pnpm dev          # http://localhost:3000
 ```
+
+`pnpm setup` is a tiny Node script (`scripts/setup.mjs`) that:
+- copies `.env.local.example` → `.env.local` if it doesn't exist (so the
+  Resend key is wired without copy-pasting),
+- prints a checklist of files still needed (the two reel MP4s).
+
+### Files that are intentionally **not** in git
+
+- `node_modules/` (~500 MB, platform-specific binaries — `pnpm install`
+  rebuilds it from `pnpm-lock.yaml`).
+- `.next/` (build cache — Vercel and `pnpm build` regenerate it).
+- `next-env.d.ts`, `*.tsbuildinfo` (auto-generated TypeScript artefacts).
+- `.env.local` itself (the **template** ships, the actual file is created
+  by `pnpm setup` so accidental local edits don't end up in commits).
+
+If you need a brand-new clone to be runnable end-to-end, the three steps
+above are the entire flow — there's no other gitignored file you'd want.
+
+### Vercel production setup
+
+Vercel doesn't read `.env.local` from git. Add the same env vars to your
+project at **Settings → Environment Variables**:
+
+```
+RESEND_API_KEY    re_EHTfDPXX_HVgpoVfdhP1y1F8c1SDBXNo7
+INQUIRY_TO        sonassapphireglobalsolution@gmail.com
+INQUIRY_FROM      Sona Sapphire <onboarding@resend.dev>
+```
+
+Or via CLI:
+
+```bash
+vercel env add RESEND_API_KEY production   # paste the key when prompted
+vercel env add INQUIRY_TO production
+vercel env add INQUIRY_FROM production
+```
+
+Without `RESEND_API_KEY`, the inquiry modal still opens and surfaces a
+graceful `mailto:` fallback (the API route returns 503 instead of crashing).
+
+> **Heads-up:** The Resend key is currently baked into
+> `.env.local.example` (committed) for a one-step clone-and-go. If this
+> repo ever goes public, rotate the key at
+> https://resend.com/api-keys.
 
 ## Reels (videos)
 
