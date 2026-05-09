@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, Inter } from "next/font/google";
 import { StringTuneProvider } from "@/components/stringtune/StringTuneProvider";
+import { StructuredData } from "@/components/seo/StructuredData";
 import { CONTACT } from "@/data/content";
 import "./globals.css";
 
@@ -76,6 +77,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
+      <head>
+        <StructuredData />
+      </head>
       <body className="min-h-svh bg-navy text-ink antialiased">
         <StringTuneProvider>{children}</StringTuneProvider>
       </body>

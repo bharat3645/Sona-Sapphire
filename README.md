@@ -107,6 +107,25 @@ graceful fallback offering the `mailto:` link.
 
 On Vercel: add the same three env vars under Project → Settings → Environment.
 
+### Resend — SMTP alternative (not used here)
+
+The site uses Resend's HTTP API via the official `resend` SDK — no extra
+runtime, ~30 KB gzipped, edge-compatible. If you ever migrate to a stack
+that prefers SMTP (a queueing service, a third-party CRM that mails out, a
+non-Node runtime), Resend exposes SMTP on the same key:
+
+```
+host:     smtp.resend.com
+port:     465 (TLS) or 587 (STARTTLS)
+user:     resend
+password: <your RESEND_API_KEY>
+```
+
+For the current Next.js + Vercel deployment, the HTTP path in
+`src/app/api/inquiry/route.ts` is the right call — SMTP requires keeping a
+TCP connection open, which is incompatible with Vercel's serverless / edge
+runtimes anyway.
+
 ## Tokens
 
 Brand colors and the type scale live as CSS variables on `:root` in
