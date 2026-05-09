@@ -26,11 +26,57 @@ const escapeHtml = (s: string) =>
     return map[c] ?? c;
   });
 
+/* ─── Rate limit ───────────────────────────────────────────────────────────
+   In-memory IP bucket: 5 submissions per minute per IP. Survives within a
+   warm Vercel instance, resets on cold start. Combined with the honeypot
+   it slows casual bots cheaply; for a real attack swap in @upstash/ratelimit
+   backed by Redis.                                                       */
+
+const RATE_LIMIT = 5;
+const WINDOW_MS = 60_000;
+type Bucket = { count: number; resetAt: number };
+const buckets = new Map<string, Bucket>();
+
+const clientIp = (req: Request): string => {
+  const fwd = req.headers.get("x-forwarded-for");
+  if (fwd) return fwd.split(",")[0]!.trim();
+  const real = req.headers.get("x-real-ip");
+  if (real) return real.trim();
+  return "anon";
+};
+
+const isLimited = (ip: string): boolean => {
+  const now = Date.now();
+  // Opportunistic cleanup so the Map doesn't grow unbounded.
+  if (buckets.size > 1024) {
+    for (const [k, b] of buckets) if (b.resetAt < now) buckets.delete(k);
+  }
+  const bucket = buckets.get(ip);
+  if (!bucket || bucket.resetAt < now) {
+    buckets.set(ip, { count: 1, resetAt: now + WINDOW_MS });
+    return false;
+  }
+  if (bucket.count >= RATE_LIMIT) return true;
+  bucket.count += 1;
+  return false;
+};
+
 export async function POST(req: Request) {
   if (!KEY) {
     return NextResponse.json(
       { ok: false, error: "Inquiry mailer is not configured." },
       { status: 503 },
+    );
+  }
+
+  const ip = clientIp(req);
+  if (isLimited(ip)) {
+    return NextResponse.json(
+      { ok: false, error: "Too many submissions. Try again in a minute." },
+      {
+        status: 429,
+        headers: { "retry-after": String(Math.ceil(WINDOW_MS / 1000)) },
+      },
     );
   }
 
@@ -44,7 +90,7 @@ export async function POST(req: Request) {
     );
   }
 
-  // Honeypot — silently 200 so bots don't learn what tripped them
+  // Honeypot — silently 200 so bots don't learn what tripped them.
   if (body.website && body.website.length > 0) {
     return NextResponse.json({ ok: true });
   }
@@ -66,9 +112,6 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
-  // Tighter than the lazy non-whitespace regex: TLD must be at least 2 chars,
-  // local + domain only allow standard email chars. Resend rejects anything
-  // looser, so we surface a clean 400 before paying the round-trip.
   if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)) {
     return NextResponse.json(
       { ok: false, error: "Invalid email." },

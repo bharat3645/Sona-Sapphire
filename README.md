@@ -42,7 +42,7 @@ Vercel doesn't read `.env.local` from git. Add the same env vars to your
 project at **Settings → Environment Variables**:
 
 ```
-RESEND_API_KEY    re_EHTfDPXX_HVgpoVfdhP1y1F8c1SDBXNo7
+RESEND_API_KEY    re_…  (your key from https://resend.com/api-keys)
 INQUIRY_TO        sonassapphireglobalsolution@gmail.com
 INQUIRY_FROM      Sona Sapphire <onboarding@resend.dev>
 ```
@@ -57,11 +57,6 @@ vercel env add INQUIRY_FROM production
 
 Without `RESEND_API_KEY`, the inquiry modal still opens and surfaces a
 graceful `mailto:` fallback (the API route returns 503 instead of crashing).
-
-> **Heads-up:** The Resend key is currently baked into
-> `.env.local.example` (committed) for a one-step clone-and-go. If this
-> repo ever goes public, rotate the key at
-> https://resend.com/api-keys.
 
 ## Reels (videos)
 

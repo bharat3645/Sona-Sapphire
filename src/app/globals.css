@@ -270,7 +270,11 @@ a { color: inherit; text-decoration: none; }
 
 .stack {
   position: relative;
-  height: 400svh;
+  /* Two reels × 100svh of scroll each = 200svh total. The first reel
+     fills the initial viewport, the second slides over it as scroll
+     progresses 0 → 1. Add a third reel to content.ts → bump to 300svh
+     and adjust the --slide multiplier below. */
+  height: 200svh;
   background: var(--c-navy-deep);
 }
 
@@ -283,7 +287,8 @@ a { color: inherit; text-decoration: none; }
 
 .stack-item {
   --i: 0;
-  --slide: clamp(0, calc(var(--i) - var(--progress, 0) * 4), 1);
+  /* Multiplier matches the reel count so each reel takes 1/N of scroll. */
+  --slide: clamp(0, calc(var(--i) - var(--progress, 0) * 2), 1);
   position: absolute; inset: 0; z-index: var(--i);
   transform:
     translate3d(0, calc(var(--slide) * 100%), 0)
@@ -367,24 +372,39 @@ a { color: inherit; text-decoration: none; }
   color: var(--c-ink-muted); letter-spacing: 0.04em;
 }
 
+/* Watermark wordmark — sits in the upper third of the frame so it doesn't
+   collide with the central subject of the video or the lower-third caption.
+   Sized so it never bleeds past the inset gutters at any viewport width. */
 .stack__wordmark {
   position: absolute; z-index: 2;
   left: clamp(1.5rem, 5vw, 4rem);
   right: clamp(1.5rem, 5vw, 4rem);
-  bottom: 0; top: 0;
-  display: grid;
-  align-items: center; justify-items: end;
+  top: clamp(7rem, 14vh, 12rem);
   margin: 0; padding: 0;
   font-family: var(--font-display), system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(4rem, 22vw, 18rem);
-  line-height: 0.86;
-  letter-spacing: -0.05em;
-  color: rgba(245, 239, 224, 0.06);
+  font-size: clamp(2.6rem, 11vw, 9rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: rgba(245, 239, 224, 0.08);
   text-align: right; text-transform: uppercase;
   pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
 }
-@media (max-height: 700px) { .stack__wordmark { font-size: clamp(3rem, 14vw, 8rem); } }
+@media (max-height: 700px) {
+  .stack__wordmark {
+    font-size: clamp(2.2rem, 8vw, 5rem);
+    top: clamp(5rem, 12vh, 8rem);
+  }
+}
+@media (max-width: 480px) {
+  .stack__wordmark {
+    font-size: clamp(2rem, 9vw, 4rem);
+    color: rgba(245, 239, 224, 0.1);
+  }
+}
 
 .stack__hud {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 4;
@@ -403,8 +423,8 @@ a { color: inherit; text-decoration: none; }
 .stack__hud-index-num {
   font-size: clamp(1.1rem, 1.8vw, 1.5rem);
   color: var(--c-gold);
-  /* Synthetic counter from --progress: 01 / 02 / 03 / 04 */
-  counter-reset: reel calc(1 + min(3, calc(var(--progress, 0) * 4)));
+  /* Synthetic counter from --progress: 01 / 02 (matches reel count). */
+  counter-reset: reel calc(1 + min(1, calc(var(--progress, 0) * 2)));
 }
 .stack__hud-index-num::before { content: "0" counter(reel); }
 .stack__hud-index-label {
@@ -1197,6 +1217,12 @@ a { color: inherit; text-decoration: none; }
 .footer__social svg { display: block; }
 .footer__social:hover { color: var(--c-ink); }
 
+/* Peel was confusing in practice — users could land mid-transition with
+   the footer half-revealed. Disabled everywhere; footer is now a normal-
+   flow block that simply scrolls into view at the end of the page. The
+   peel sentinel renders an empty 0px stub so the data-string="progress"
+   binding doesn't error, but the --peel variable no longer drives any
+   visible transform on <main>. */
 .peel-sentinel { display: none; }
 
 main {
@@ -1205,31 +1231,6 @@ main {
   transform: none;
   border-radius: 0;
   box-shadow: none;
-}
-
-/* Peel — only on devices that can host it (desktops + tablet portrait) */
-@media (min-width: 1024px) and (min-height: 720px) and (pointer: fine) {
-  .footer {
-    position: fixed; inset: auto 0 0 0;
-    z-index: 0;
-    height: 100svh;
-    display: grid; grid-template-rows: auto 1fr auto;
-    padding: clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 4rem);
-    gap: clamp(1.25rem, 3vw, 2rem);
-    pointer-events: none;
-  }
-  .footer__top, .footer__inner, .footer__meta { pointer-events: auto; }
-  .peel-sentinel {
-    display: block;
-    position: relative; height: 60svh; pointer-events: none;
-  }
-  main {
-    transform-origin: 50% 100%;
-    transform: translateY(calc(var(--peel, 0) * -10vh)) scale(calc(1 - var(--peel, 0) * 0.06));
-    border-radius: calc(var(--peel, 0) * 28px);
-    box-shadow: 0 calc(var(--peel, 0) * 60px) calc(var(--peel, 0) * 140px) rgba(0,0,0, 0.55);
-    will-change: transform, border-radius;
-  }
 }
 
 /* ╔══════════════════════════════════════════════════════════════════════════╗

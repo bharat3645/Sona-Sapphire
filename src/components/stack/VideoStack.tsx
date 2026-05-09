@@ -16,7 +16,7 @@ export function VideoStack() {
             <VideoStackItem
               key={reel.id}
               reel={reel}
-              index={idx as 0 | 1 | 2 | 3}
+              index={idx as 0 | 1}
               priority={idx === 0}
             />
           ))}
@@ -32,7 +32,7 @@ export function VideoStack() {
         <div className="stack__hud">
           <span className="stack__hud-index">
             <span className="stack__hud-index-num" />
-            <span className="stack__hud-index-label">/ 04 reels</span>
+            <span className="stack__hud-index-label">/ 02 reels</span>
           </span>
           <span className="stack__hud-scroll">Scroll to unfurl</span>
         </div>

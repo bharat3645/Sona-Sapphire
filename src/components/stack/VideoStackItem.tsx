@@ -7,7 +7,7 @@ import type { ReelDef } from "@/data/content";
 
 interface Props {
   readonly reel: ReelDef;
-  readonly index: 0 | 1 | 2 | 3;
+  readonly index: 0 | 1;
   readonly priority?: boolean;
 }
 
