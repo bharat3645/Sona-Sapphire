@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { InquiryTrigger } from "@/components/inquiry/InquiryTrigger";
+import { MobileMenu } from "./MobileMenu";
 
 const LINKS = [
   { href: "#work", label: "Work" },
@@ -56,6 +57,8 @@ export function TopNav() {
       >
         Start a project
       </InquiryTrigger>
+
+      <MobileMenu />
     </header>
   );
 }

@@ -9,6 +9,7 @@ import { Curtain } from "@/components/overlays/Curtain";
 import { Grain } from "@/components/overlays/Grain";
 import { ScrollProgress } from "@/components/overlays/ScrollProgress";
 import { Spotlight } from "@/components/overlays/Spotlight";
+import { SectionReveal } from "@/components/overlays/SectionReveal";
 import { InquiryDialog } from "@/components/inquiry/InquiryDialog";
 import { InquirySection } from "@/components/inquiry/InquirySection";
 
@@ -19,6 +20,7 @@ export default function HomePage() {
       <Grain />
       <Spotlight />
       <ScrollProgress />
+      <SectionReveal />
       <TopNav />
       <main>
         <VideoStack />
