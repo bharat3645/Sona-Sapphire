@@ -10,6 +10,7 @@ import { Grain } from "@/components/overlays/Grain";
 import { ScrollProgress } from "@/components/overlays/ScrollProgress";
 import { Spotlight } from "@/components/overlays/Spotlight";
 import { InquiryDialog } from "@/components/inquiry/InquiryDialog";
+import { InquirySection } from "@/components/inquiry/InquirySection";
 
 export default function HomePage() {
   return (
@@ -25,6 +26,7 @@ export default function HomePage() {
         <StatsAbout />
         <WorkShowcase />
         <Marquee />
+        <InquirySection />
       </main>
       <Footer />
       <InquiryDialog />
