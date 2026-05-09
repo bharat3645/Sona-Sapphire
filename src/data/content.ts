@@ -55,8 +55,8 @@ const UNS = (id: string, w = 1920) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
 
 /* ────────────────────────────────────────────────────────────────────────── */
-/*  Reels — first two slots wired to client cuts hosted in /public/videos/.   */
-/*  Remaining slots stay image-only until additional cuts arrive.            */
+/*  Reels — both slots wired to client cuts hosted in /public/videos/.       */
+/*  Add more slots here as additional cuts are produced.                     */
 /* ────────────────────────────────────────────────────────────────────────── */
 
 export const REELS: readonly ReelDef[] = [
@@ -81,28 +81,6 @@ export const REELS: readonly ReelDef[] = [
     format: "1080p · 16:9 · 25fps",
     tc: "01:00:38:21",
     parallax: 0.22,
-  },
-  {
-    id: "reel-3",
-    src: undefined,
-    poster: UNS("1551836022-deb4988cc6c0"),
-    label: "Sites That Convert",
-    tag: "Reel 03 · Web Development",
-    client: "Business sites · Funnels · Software",
-    format: "Web · 16:9 · 60fps",
-    tc: "01:01:02:12",
-    parallax: 0.28,
-  },
-  {
-    id: "reel-4",
-    src: undefined,
-    poster: UNS("1525909002-1b05e0c869d8"),
-    label: "Brand Systems",
-    tag: "Reel 04 · Brand Development",
-    client: "Identity · Voice · Launch",
-    format: "Print · Digital · Motion",
-    tc: "01:01:26:04",
-    parallax: 0.32,
   },
 ] as const;
 
