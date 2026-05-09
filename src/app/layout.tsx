@@ -18,8 +18,11 @@ const body = Inter({
   display: "swap",
 });
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://sona-sapphire.vercel.app";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sonasapphire.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: `${CONTACT.legal} — Digital Growth · Creative Media · Web Solutions`,
     template: "%s — Sona Sapphire",
@@ -38,22 +41,39 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     type: "website",
-    title: CONTACT.legal,
-    description: "Cinematic creative · Measurable growth.",
+    title: `${CONTACT.legal} — Cinematic creative · Measurable growth`,
+    description:
+      "Cinematic ads, social systems, websites, and brand — built end to end.",
     siteName: CONTACT.legal,
+    locale: "en_US",
   },
-  twitter: { card: "summary_large_image" },
+  twitter: {
+    card: "summary_large_image",
+    title: `${CONTACT.legal} — Cinematic creative · Measurable growth`,
+    description:
+      "Cinematic ads, social systems, websites, and brand — built end to end.",
+  },
   robots: { index: true, follow: true },
+  alternates: { canonical: "/" },
+  formatDetection: { telephone: false, email: false, address: false },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B1B3A",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0B1B3A" },
+    { media: "(prefers-color-scheme: light)", color: "#0B1B3A" },
+  ],
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
 };
 
-export default function RootLayout({ children }: { readonly children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body className="min-h-svh bg-navy text-ink antialiased">

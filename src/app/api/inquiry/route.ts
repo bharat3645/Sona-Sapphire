@@ -66,7 +66,10 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+  // Tighter than the lazy non-whitespace regex: TLD must be at least 2 chars,
+  // local + domain only allow standard email chars. Resend rejects anything
+  // looser, so we surface a clean 400 before paying the round-trip.
+  if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)) {
     return NextResponse.json(
       { ok: false, error: "Invalid email." },
       { status: 400 },
