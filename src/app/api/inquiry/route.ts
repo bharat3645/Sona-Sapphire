@@ -3,7 +3,9 @@ import { Resend } from "resend";
 import { SERVICE_TYPES, type ServiceType } from "@/data/content";
 
 const KEY = process.env.RESEND_API_KEY;
-const TO = process.env.INQUIRY_TO ?? "sonassapphireglobalsolution@gmail.com";
+// All inquiries route to the business address only. Override via env if a
+// shared inbox is added later (e.g. sales@ / studio@).
+const TO = process.env.INQUIRY_TO ?? "info@sonasapphire.com";
 const FROM = process.env.INQUIRY_FROM ?? "Sona Sapphire <onboarding@resend.dev>";
 
 interface InquiryBody {

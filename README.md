@@ -43,7 +43,7 @@ project at **Settings → Environment Variables**:
 
 ```
 RESEND_API_KEY    re_…  (your key from https://resend.com/api-keys)
-INQUIRY_TO        sonassapphireglobalsolution@gmail.com
+INQUIRY_TO        info@sonasapphire.com
 INQUIRY_FROM      Sona Sapphire <onboarding@resend.dev>
 ```
 
@@ -89,7 +89,7 @@ A single StringTune runtime lives in `components/stringtune/StringTuneProvider.t
 
 ```
 RESEND_API_KEY=re_…
-INQUIRY_TO=sonassapphireglobalsolution@gmail.com
+INQUIRY_TO=info@sonasapphire.com
 INQUIRY_FROM=Sona Sapphire <onboarding@resend.dev>
 ```
 
@@ -183,4 +183,4 @@ peel — see the block at the bottom of `globals.css`.
 ## Contact
 
 - **Phone:** +91 88818 57060
-- **Email:** sonassapphireglobalsolution@gmail.com
+- **Email:** info@sonasapphire.com
