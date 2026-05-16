@@ -154,10 +154,10 @@ a { color: inherit; text-decoration: none; }
 .curtain__emblem-img {
   position: relative; z-index: 1;
   width: 100%; height: auto;
-  /* Same trick as .logo-gem — the dark backdrop blends out so only
-     the gold-rimmed S + the gold wordmark composite onto the curtain. */
-  mix-blend-mode: screen;
-  filter: drop-shadow(0 18px 60px rgba(212,162,76, 0.4));
+  /* Alpha-matted PNG — no blend mode required. Drop-shadow alone carries
+     the gold glow against the curtain backdrop. */
+  filter: drop-shadow(0 18px 60px rgba(212,162,76, 0.45))
+          drop-shadow(0 0 28px rgba(46,107,230, 0.35));
 }
 .curtain__name {
   font-family: var(--font-display), system-ui, sans-serif;
@@ -201,8 +201,8 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   inset: -22%;
   z-index: 0;
-  background: radial-gradient(closest-side, rgba(212,162,76, 0.48), transparent 70%);
-  filter: blur(10px);
+  background: radial-gradient(closest-side, rgba(212,162,76, 0.5), transparent 70%);
+  filter: blur(12px);
 }
 .logo-gem img {
   position: relative;
@@ -210,11 +210,9 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   height: 100%;
   object-fit: contain;
-  /* The supplied PNG has a near-black backdrop. `screen` blends bright
-     pixels (gold + sapphire S) onto the page while the dark backdrop
-     becomes transparent — no visible square edge on any background. */
-  mix-blend-mode: screen;
-  filter: drop-shadow(0 6px 18px rgba(46,107,230, 0.4));
+  /* PNG ships with a real per-pixel alpha matte (see scripts/process-
+     emblem.mjs). No blend-mode trickery — composites cleanly anywhere. */
+  filter: drop-shadow(0 6px 18px rgba(46,107,230, 0.45));
 }
 
 /* ╔══════════════════════════════════════════════════════════════════════════╗

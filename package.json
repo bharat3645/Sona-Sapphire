@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "setup": "node scripts/setup.mjs",
+    "setup:logo": "node scripts/process-emblem.mjs",
     "fetch:stock": "node scripts/fetch-stock.mjs"
   },
   "dependencies": {
