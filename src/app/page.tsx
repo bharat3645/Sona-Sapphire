@@ -1,4 +1,5 @@
 import { TopNav } from "@/components/nav/TopNav";
+import { MobileMenu } from "@/components/nav/MobileMenu";
 import { VideoStack } from "@/components/stack/VideoStack";
 import { Marquee } from "@/components/marquee/Marquee";
 import { ServicesGlide } from "@/components/services/ServicesGlide";
@@ -22,6 +23,7 @@ export default function HomePage() {
       <ScrollProgress />
       <SectionReveal />
       <TopNav />
+      <MobileMenu />
       <main>
         <VideoStack />
         <ServicesGlide />
