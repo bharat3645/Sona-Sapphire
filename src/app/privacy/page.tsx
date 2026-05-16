@@ -3,6 +3,9 @@ import Link from "next/link";
 import { CONTACT, SOCIALS } from "@/data/content";
 import { TopNav } from "@/components/nav/TopNav";
 import { SocialIcon } from "@/components/social/SocialIcon";
+import { Grain } from "@/components/overlays/Grain";
+import { Spotlight } from "@/components/overlays/Spotlight";
+import { ScrollProgress } from "@/components/overlays/ScrollProgress";
 
 export const metadata: Metadata = {
   title: "Privacy",
@@ -142,6 +145,9 @@ const SECTIONS: readonly LegalSection[] = [
 export default function PrivacyPage() {
   return (
     <>
+      <Grain />
+      <Spotlight />
+      <ScrollProgress />
       <TopNav />
       <main className="legal">
         <article className="legal__shell">
