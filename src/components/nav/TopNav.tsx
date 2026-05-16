@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { InquiryTrigger } from "@/components/inquiry/InquiryTrigger";
-import { MobileMenu } from "./MobileMenu";
 
 const LINKS = [
   { href: "#work", label: "Work" },
@@ -25,11 +24,8 @@ export function TopNav() {
         <span className="logo-gem nav__brand-mark" aria-hidden="true">
           <Image src="/brand/sapphire-gem.png" alt="" width={96} height={96} priority />
         </span>
-        <span className="nav__brand-block">
-          <span className="nav__brand-name">
-            Sona <b>Sapphire</b>
-          </span>
-          <span className="nav__brand-tag">Global Solutions · Est. 2024</span>
+        <span className="nav__brand-name">
+          Sona <b>Sapphire</b>
         </span>
       </Link>
 
@@ -66,8 +62,6 @@ export function TopNav() {
           Start a project
         </InquiryTrigger>
       </div>
-
-      <MobileMenu />
     </header>
   );
 }

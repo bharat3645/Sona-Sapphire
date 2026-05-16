@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CONTACT, SOCIALS } from "@/data/content";
 import { TopNav } from "@/components/nav/TopNav";
+import { MobileMenu } from "@/components/nav/MobileMenu";
 import { SocialIcon } from "@/components/social/SocialIcon";
 import { Grain } from "@/components/overlays/Grain";
 import { Spotlight } from "@/components/overlays/Spotlight";
@@ -149,6 +150,7 @@ export default function PrivacyPage() {
       <Spotlight />
       <ScrollProgress />
       <TopNav />
+      <MobileMenu />
       <main className="legal">
         <article className="legal__shell">
           <header className="legal__head">
