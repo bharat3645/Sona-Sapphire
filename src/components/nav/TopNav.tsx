@@ -23,10 +23,13 @@ export function TopNav() {
         data-string-radius="120"
       >
         <span className="logo-gem nav__brand-mark" aria-hidden="true">
-          <Image src="/brand/sapphire-gem.png" alt="" width={64} height={64} />
+          <Image src="/brand/sapphire-gem.png" alt="" width={96} height={96} priority />
         </span>
-        <span className="nav__brand-name">
-          Sona <b>Sapphire</b>
+        <span className="nav__brand-block">
+          <span className="nav__brand-name">
+            Sona <b>Sapphire</b>
+          </span>
+          <span className="nav__brand-tag">Global Solutions · Est. 2024</span>
         </span>
       </Link>
 
@@ -46,17 +49,23 @@ export function TopNav() {
         ))}
       </nav>
 
-      <InquiryTrigger
-        className="nav__cta"
-        dataAttrs={{
-          "data-string": "magnetic",
-          "data-string-id": "nav-cta",
-          "data-string-strength": "0.35",
-          "data-string-radius": "160",
-        }}
-      >
-        Start a project
-      </InquiryTrigger>
+      <div className="nav__end">
+        <span className="nav__status" aria-label="Studio booking status">
+          <span className="nav__status-dot" aria-hidden="true" />
+          <span className="nav__status-label">Booking 2026</span>
+        </span>
+        <InquiryTrigger
+          className="nav__cta"
+          dataAttrs={{
+            "data-string": "magnetic",
+            "data-string-id": "nav-cta",
+            "data-string-strength": "0.35",
+            "data-string-radius": "160",
+          }}
+        >
+          Start a project
+        </InquiryTrigger>
+      </div>
 
       <MobileMenu />
     </header>

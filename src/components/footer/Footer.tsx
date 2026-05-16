@@ -7,7 +7,6 @@ export function Footer() {
     <>
       <div
         className="peel-sentinel"
-        id="contact"
         data-string="progress"
         data-string-id="peel"
         data-string-key="--peel"
@@ -17,7 +16,7 @@ export function Footer() {
         data-string-exit-vp="bottom"
         aria-hidden="true"
       />
-      <footer className="footer" aria-label="Contact">
+      <footer id="contact" className="footer" aria-label="Contact">
         <div className="footer__top">
           <span>Let&rsquo;s talk · IST &amp; everywhere</span>
           <span>{CONTACT.est}</span>

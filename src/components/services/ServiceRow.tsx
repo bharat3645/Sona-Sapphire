@@ -24,14 +24,19 @@ export function ServiceRow({ service, defaultOpen = false }: Props) {
         onClick={() => setOpen((o) => !o)}
       >
         <span className="service-row__index">{idx}</span>
-        <span
-          className="service-row__title"
-          data-string="magnetic"
-          data-string-id={`svc-title-${service.hue}`}
-          data-string-strength="0.18"
-          data-string-radius="220"
-        >
-          {service.title}
+        <span className="service-row__title-wrap">
+          <span
+            className="service-row__title"
+            data-string="magnetic"
+            data-string-id={`svc-title-${service.hue}`}
+            data-string-strength="0.18"
+            data-string-radius="220"
+          >
+            {service.title}
+          </span>
+          <span className="service-row__subtitle-inline">
+            {service.subtitle}
+          </span>
         </span>
         <span
           className="service-row__plus"
@@ -51,15 +56,27 @@ export function ServiceRow({ service, defaultOpen = false }: Props) {
       >
         <div className="service-row__panel-inner">
           <div className="service-row__copy">
-            <span className="service-row__subtitle">{service.subtitle}</span>
             <p className="service-row__desc">{service.description}</p>
+
+            <ul
+              className="service-row__caps"
+              aria-label={`${service.title} capabilities`}
+            >
+              {service.capabilities.map((cap) => (
+                <li key={cap} className="service-row__cap">
+                  {cap}
+                </li>
+              ))}
+            </ul>
+
             <ul className="service-row__bullets">
               {service.bullets.map((b) => (
                 <li key={b}>{b}</li>
               ))}
             </ul>
+
             <a
-              href="#contact"
+              href="#inquiry"
               className="service-row__cta"
               data-string="magnetic"
               data-string-id={`svc-cta-${service.hue}`}

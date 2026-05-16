@@ -15,6 +15,7 @@ export interface ServiceDef {
   readonly title: string;
   readonly subtitle: string;
   readonly description: string;
+  readonly capabilities: readonly string[];
   readonly bullets: readonly string[];
   readonly samples: readonly { readonly src: string; readonly label: string }[];
   readonly hue: "ad" | "social" | "web" | "brand";
@@ -55,8 +56,7 @@ const UNS = (id: string, w = 1920) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
 
 /* ────────────────────────────────────────────────────────────────────────── */
-/*  Reels — both slots wired to client cuts hosted in /public/videos/.       */
-/*  Add more slots here as additional cuts are produced.                     */
+/*  Reels                                                                     */
 /* ────────────────────────────────────────────────────────────────────────── */
 
 export const REELS: readonly ReelDef[] = [
@@ -85,25 +85,37 @@ export const REELS: readonly ReelDef[] = [
 ] as const;
 
 /* ────────────────────────────────────────────────────────────────────────── */
-/*  Services                                                                  */
+/*  Services — four practices, each one a deep vertical the studio runs       */
+/*  end to end. The `capabilities` array surfaces the breadth of each;        */
+/*  `bullets` are the at-a-glance scope pitched to a CMO.                     */
 /* ────────────────────────────────────────────────────────────────────────── */
 
 export const SERVICES: readonly ServiceDef[] = [
   {
     index: 1,
     title: "Advertisement Videos",
-    subtitle: "Stories that sell",
+    subtitle: "Cinema for brands · Frame-perfect storytelling",
     description:
-      "Cinematic ads built around a single insight — frame-perfect storytelling with the production rigour of a studio and the speed of a creator team. From classroom to checkout.",
+      "A full production house under one roof. We take a single insight from kickoff to broadcast — concepting and scripting, directing on set, finishing in colour and sound, then cutting for every channel a campaign needs. Every frame is briefed against the metric we're moving.",
+    capabilities: [
+      "Concept & script",
+      "Storyboard & moodboards",
+      "Director · DOP · sound",
+      "Colour & post",
+      "Motion graphics",
+      "Channel-native cut-downs",
+    ],
     bullets: [
-      "School ads & education spots",
-      "Business promos & TVCs",
-      "Product reels & explainers",
-      "Cut-downs for every channel",
+      "School & education campaigns",
+      "Business promos, TVCs, founder films",
+      "Product reels, demos, explainers",
+      "Performance creative (A/B variants at scale)",
+      "Brand films & manifesto cinema",
+      "Channel cut-downs (TV / IG / YT / OOH)",
     ],
     samples: [
-      { src: UNS("1485827404703-89b55fcc595e", 900), label: "Set" },
-      { src: UNS("1518929458119-e5bf444c30f4", 900), label: "Lens" },
+      { src: UNS("1485827404703-89b55fcc595e", 900), label: "Director" },
+      { src: UNS("1500917293891-ef795e70e1a3", 900), label: "Lens" },
       { src: UNS("1517245386807-bb43f82c33c4", 900), label: "Studio" },
     ],
     hue: "ad",
@@ -111,14 +123,24 @@ export const SERVICES: readonly ServiceDef[] = [
   {
     index: 2,
     title: "Social Media Handling",
-    subtitle: "Compounding attention",
+    subtitle: "A weekly drumbeat · Compounding attention",
     description:
-      "Strategy, content, community — engineered to grow channels weekly, not yearly. We run the calendar, the studio, and the engagement loop end-to-end.",
-    bullets: [
-      "Instagram growth systems",
-      "Facebook & Meta Ads",
-      "YouTube channel architecture",
+      "Your channel team without the headcount. We own the calendar, shoot the assets, write the captions, place the paid spend, and reply in the DMs — running as a single operating system across Instagram, YouTube, Facebook, and LinkedIn. Reports land monthly with the next month already scripted.",
+    capabilities: [
+      "Channel strategy",
+      "Content calendar",
+      "In-house creator team",
+      "Paid distribution (Meta · Google)",
       "Community + DM ops",
+      "Monthly reporting",
+    ],
+    bullets: [
+      "Instagram growth & reels engine",
+      "YouTube channel architecture & long-form",
+      "Meta Ads (Facebook + Instagram)",
+      "LinkedIn for founders & B2B",
+      "Influencer & creator collaborations",
+      "Analytics, attribution, monthly playbooks",
     ],
     samples: [
       { src: UNS("1611162616475-46b635cb6868", 900), label: "Mobile" },
@@ -130,14 +152,24 @@ export const SERVICES: readonly ServiceDef[] = [
   {
     index: 3,
     title: "Website Development",
-    subtitle: "Sites that convert",
+    subtitle: "Sites engineered for revenue · Built on the same stack as Awwwards winners",
     description:
-      "Business sites, landing pages, and software products built on the same stack as Awwwards winners — with the conversion instrumentation that actually moves revenue.",
-    bullets: [
-      "Business websites",
+      "Marketing sites, landing pages, e-commerce, and full software products built in Next.js, React, and headless CMSes. Every build ships with conversion instrumentation, SEO foundations, and the operations docs so your team can run it after launch.",
+    capabilities: [
+      "Marketing & business sites",
       "Landing pages & funnels",
+      "E-commerce (Shopify · headless)",
       "Software products & dashboards",
-      "Headless commerce",
+      "Headless CMS integration",
+      "Performance + SEO baked in",
+    ],
+    bullets: [
+      "Cinematic business websites (Next.js + Sanity/Contentful)",
+      "High-converting landing pages (full A/B instrumentation)",
+      "Software apps & internal dashboards",
+      "Shopify storefronts & headless commerce",
+      "API integrations · auth · payments",
+      "Core Web Vitals tuned, indexable from day one",
     ],
     samples: [
       { src: UNS("1551434678-e076c223a692", 900), label: "Build" },
@@ -149,14 +181,24 @@ export const SERVICES: readonly ServiceDef[] = [
   {
     index: 4,
     title: "Brand Development",
-    subtitle: "Identity, end to end",
+    subtitle: "Identity, end to end · Naming through rollout",
     description:
-      "Naming, voice, mark, and a launch playbook — wrapped into a single delivery a small team can run. We make sure the brand survives first contact with growth.",
-    bullets: [
-      "Identity systems & wordmarks",
-      "Voice, messaging, copy decks",
-      "Launch & rollout playbooks",
+      "Foundations work. We sit with founders to find the brand's real position, name it, draw its mark, set its palette, write its voice, and ship the playbook your team uses every quarter. Built to survive first contact with growth.",
+    capabilities: [
+      "Brand strategy & positioning",
+      "Naming & verbal identity",
+      "Logo, palette, typography",
+      "Voice & messaging decks",
+      "Launch playbooks",
       "Guidelines & governance",
+    ],
+    bullets: [
+      "Brand strategy workshops (founder + leadership)",
+      "Naming sprints with verification",
+      "Identity systems — logo, palette, typography, motion",
+      "Tone-of-voice & messaging frameworks",
+      "Launch playbooks for marketing, sales, HR",
+      "Rebrands & evolution of existing identities",
     ],
     samples: [
       { src: UNS("1581094794329-c8112a89af12", 900), label: "System" },
@@ -168,9 +210,9 @@ export const SERVICES: readonly ServiceDef[] = [
 ] as const;
 
 /* ────────────────────────────────────────────────────────────────────────── */
-/*  Work showcase — feature tile is the website work, secondary tiles span    */
-/*  every other practice for visual variety. Lives at the bottom of the page  */
-/*  before the marquee + footer.                                              */
+/*  Selected Work — feature tile leads with the website-build story, then     */
+/*  five tiles rotate across the other practices for variety. The poster     */
+/*  imagery was re-curated to read more like a production reel than stock.   */
 /* ────────────────────────────────────────────────────────────────────────── */
 
 export const WORK: readonly WorkTile[] = [
@@ -178,45 +220,43 @@ export const WORK: readonly WorkTile[] = [
     id: "feature-web",
     feature: true,
     title: "Sites That Convert",
-    subtitle: "Custom Next.js builds · Conversion-instrumented",
-    tag: "Featured · Website",
+    subtitle: "Next.js builds · Conversion-instrumented · Hand-back ready",
+    tag: "Featured · Web Build",
     poster: UNS("1551434678-e076c223a692"),
-    href: "#contact",
+    href: "#inquiry",
   },
   {
     id: "work-ad",
-    title: "Brand Films",
+    title: "On Set — Brand Film",
     tag: "Advertisement",
     poster: UNS("1485827404703-89b55fcc595e", 1200),
   },
   {
     id: "work-social",
-    title: "Social Reels",
+    title: "Reels That Compound",
     tag: "Social Media",
     poster: UNS("1611162616475-46b635cb6868", 1200),
   },
   {
     id: "work-product",
-    title: "Product Showcase",
-    tag: "E-comm",
-    poster: UNS("1525909002-1b05e0c869d8", 1200),
+    title: "Product Stories",
+    tag: "E-commerce",
+    poster: UNS("1556761175-5973dc0f32e7", 1200),
   },
   {
     id: "work-edu",
-    title: "Education",
-    tag: "Long-form",
+    title: "Education — Long Form",
+    tag: "Campus Film",
     poster: UNS("1486312338219-ce68d2c6f44d", 1200),
   },
   {
     id: "work-brand",
-    title: "Brand Systems",
-    tag: "Identity",
+    title: "Identity Systems",
+    tag: "Brand",
     poster: UNS("1581094794329-c8112a89af12", 1200),
   },
 ] as const;
 
-/* ────────────────────────────────────────────────────────────────────────── */
-/*  Process / Stats / Editorial / Contact                                     */
 /* ────────────────────────────────────────────────────────────────────────── */
 
 export const PROCESS: readonly ProcessStep[] = [
@@ -226,11 +266,6 @@ export const PROCESS: readonly ProcessStep[] = [
   { index: 4, title: "Defend",   body: "Test, learn, and compound. Every win turns into a system we hand back to your team, with documentation and dashboards." },
 ] as const;
 
-/**
- * Stats — three metrics. The "Reels produced 600+" delivery counter was
- * dropped per direction: it carried a duration implication ("over time")
- * that the rest of the section avoids.
- */
 export const STATS: readonly StatDef[] = [
   { target: 120, label: "Projects shipped" },
   { target: 48,  label: "Active clients" },
@@ -247,19 +282,14 @@ export const QUOTE = {
 };
 
 export const MARQUEE: readonly string[] = [
-  "Digital Growth",
-  "Creative Media",
-  "Web Solutions",
-  "Brand Systems",
-  "Performance Ads",
-  "Social at Scale",
+  "Advertisement Videos",
+  "Social Media Handling",
+  "Website Development",
+  "Brand Development",
+  "Cinematic Creative",
+  "Measurable Growth",
 ];
 
-/**
- * Social profiles. Update the href values once the actual handles are
- * registered — these point to plausible URLs based on the agency's handle
- * but should be verified before launch.
- */
 export const SOCIALS: readonly SocialDef[] = [
   { kind: "instagram", label: "Instagram", handle: "@sonasapphire", href: "https://www.instagram.com/sonasapphire" },
   { kind: "youtube",   label: "YouTube",   handle: "@sonasapphire", href: "https://www.youtube.com/@sonasapphire" },
@@ -279,8 +309,8 @@ export type ServiceType = (typeof SERVICE_TYPES)[number];
 export const CONTACT = {
   phone: "+91 88818 57060",
   phoneHref: "tel:+918881857060",
-  email: "sonassapphireglobalsolution@gmail.com",
-  emailHref: "mailto:sonassapphireglobalsolution@gmail.com",
+  email: "info@sonasapphire.com",
+  emailHref: "mailto:info@sonasapphire.com",
   legal: "Sona Sapphire Global Solutions",
   alt: "Sona's Sapphire Media International",
   est: "Est. 2024 · Based in India · Working worldwide",
