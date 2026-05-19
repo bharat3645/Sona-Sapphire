@@ -39,10 +39,13 @@ export function InquirySection() {
         .json()
         .catch(() => ({}))) as { ok?: boolean; error?: string };
       if (!res.ok || !json.ok) {
-        setStatus({
-          kind: "error",
-          message: json.error ?? `Submission failed (${res.status}).`,
-        });
+        const raw = json.error ?? `Submission failed (${res.status}).`;
+        // Resend sandbox-mode rejection — surface a clean fallback instead
+        // of the raw "verify a domain at resend.com/domains" message.
+        const friendly = /testing emails|verify a domain|resend\.com\/domains/i.test(raw)
+          ? "We're finalising the mailer setup. Please email us at info@sonasapphire.com or call +91 88818 57060 — we'll reply within 24 hours."
+          : raw;
+        setStatus({ kind: "error", message: friendly });
         return;
       }
       setStatus({ kind: "success" });
