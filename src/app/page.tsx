@@ -5,6 +5,7 @@ import { Marquee } from "@/components/marquee/Marquee";
 import { ServicesGlide } from "@/components/services/ServicesGlide";
 import { StatsAbout } from "@/components/stats/StatsAbout";
 import { WorkShowcase } from "@/components/work/WorkShowcase";
+import { Leadership } from "@/components/leadership/Leadership";
 import { Footer } from "@/components/footer/Footer";
 import { Curtain } from "@/components/overlays/Curtain";
 import { Grain } from "@/components/overlays/Grain";
@@ -29,6 +30,7 @@ export default function HomePage() {
         <ServicesGlide />
         <StatsAbout />
         <WorkShowcase />
+        <Leadership />
         <Marquee />
         <InquirySection />
       </main>

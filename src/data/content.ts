@@ -42,6 +42,20 @@ export interface ProcessStep {
   readonly body: string;
 }
 
+export interface LeaderDef {
+  readonly id: string;
+  readonly name: string;
+  readonly role: string;
+  readonly bio: string;
+  readonly photo: string;
+}
+
+export interface TeamExperience {
+  readonly team: string;
+  readonly years: number;
+  readonly note: string;
+}
+
 export interface WorkTile {
   readonly id: string;
   readonly title: string;
@@ -115,7 +129,7 @@ export const SERVICES: readonly ServiceDef[] = [
     ],
     samples: [
       { src: UNS("1485827404703-89b55fcc595e", 900), label: "Director" },
-      { src: UNS("1500917293891-ef795e70e1a3", 900), label: "Lens" },
+      { src: UNS("1518929458119-e5bf444c30f4", 900), label: "Lens" },
       { src: UNS("1517245386807-bb43f82c33c4", 900), label: "Studio" },
     ],
     hue: "ad",
@@ -255,6 +269,48 @@ export const WORK: readonly WorkTile[] = [
     tag: "Brand",
     poster: UNS("1581094794329-c8112a89af12", 1200),
   },
+] as const;
+
+/* ────────────────────────────────────────────────────────────────────────── */
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/*  Leadership — the people who own the studio. Names are intentionally       */
+/*  generic placeholders so the user can swap real names in this file         */
+/*  without touching the component or CSS.                                    */
+/* ────────────────────────────────────────────────────────────────────────── */
+
+export const LEADERSHIP: readonly LeaderDef[] = [
+  {
+    id: "ceo-1",
+    name: "Co-Founder",
+    role: "Chief Executive Officer",
+    bio: "Steers studio direction, client relationships, and the operating model that lets cinema + analytics ship under one roof.",
+    photo: "/team/ceo-1.jpg",
+  },
+  {
+    id: "ceo-2",
+    name: "Co-Founder",
+    role: "Chief Executive Officer",
+    bio: "Owns the creative North-Star — brand voice, storytelling craft, and every frame that goes out under the Sona Sapphire mark.",
+    photo: "/team/ceo-2.jpg",
+  },
+  {
+    id: "it-head",
+    name: "Technology Lead",
+    role: "Head of IT Management",
+    bio: "Runs the engineering bench — sites, software, infra, and the conversion instrumentation that ships with every build.",
+    photo: "/team/it-head.jpg",
+  },
+] as const;
+
+/**
+ * Years on the bench per practice. Surfaces above the leadership grid as a
+ * small experience strip — the rest of the page demonstrates depth, this
+ * line states it explicitly so prospects scanning the page see the years.
+ */
+export const TEAM_EXPERIENCE: readonly TeamExperience[] = [
+  { team: "Media team", years: 7, note: "Production · post · paid distribution" },
+  { team: "Development team", years: 3, note: "Web · software · headless commerce" },
 ] as const;
 
 /* ────────────────────────────────────────────────────────────────────────── */
