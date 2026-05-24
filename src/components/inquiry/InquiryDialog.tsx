@@ -7,6 +7,7 @@ type Status =
   | { kind: "idle" }
   | { kind: "submitting" }
   | { kind: "error"; message: string }
+  | { kind: "network-error" }
   | { kind: "success" };
 
 const INITIAL_FORM = {
@@ -18,6 +19,24 @@ const INITIAL_FORM = {
 };
 
 export const INQUIRY_OPEN_EVENT = "sona-inquiry:open";
+
+function buildMailto(form: typeof INITIAL_FORM): string {
+  const subject = `Inquiry — ${form.type} — ${form.name || "(no name)"}`;
+  const bodyLines = [
+    `Name: ${form.name}`,
+    `Email: ${form.email}`,
+    `Project type: ${form.type}`,
+    "",
+    "Message:",
+    form.message,
+    "",
+    "—",
+    "Sent via sonasapphire.com",
+  ].join("\n");
+  return `mailto:${CONTACT.email}?subject=${encodeURIComponent(
+    subject,
+  )}&body=${encodeURIComponent(bodyLines)}`;
+}
 
 export function InquiryDialog() {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -63,6 +82,12 @@ export function InquiryDialog() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (typeof navigator !== "undefined" && navigator.onLine === false) {
+      setStatus({ kind: "network-error" });
+      return;
+    }
+
     setStatus({ kind: "submitting" });
     try {
       const res = await fetch("/api/inquiry", {
@@ -80,9 +105,8 @@ export function InquiryDialog() {
         return;
       }
       setStatus({ kind: "success" });
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : "Network error.";
-      setStatus({ kind: "error", message: msg });
+    } catch {
+      setStatus({ kind: "network-error" });
     }
   };
 
@@ -107,6 +131,30 @@ export function InquiryDialog() {
             <button type="button" className="inquiry__close-btn" onClick={close}>
               Close
             </button>
+          </div>
+        ) : status.kind === "network-error" ? (
+          <div className="inquiry__success">
+            <span className="eyebrow">Connection blocked</span>
+            <h2 className="inquiry__success-title">
+              Our mailer can&rsquo;t be reached from here.
+            </h2>
+            <p className="inquiry__success-body">
+              No problem — tap below to open your mail app with everything you
+              typed already prefilled. Or call the studio at{" "}
+              <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>.
+            </p>
+            <div className="inquiry__actions">
+              <a
+                href={buildMailto(form)}
+                className="inquiry__submit"
+                onClick={() => setTimeout(close, 600)}
+              >
+                Open in mail app →
+              </a>
+              <button type="button" className="inquiry__close-btn" onClick={close}>
+                Close
+              </button>
+            </div>
           </div>
         ) : (
           <>
@@ -195,8 +243,8 @@ export function InquiryDialog() {
 
               {status.kind === "error" ? (
                 <p className="inquiry__error" role="alert">
-                  {status.message} &nbsp;· Or email us at{" "}
-                  <a href={CONTACT.emailHref}>{CONTACT.email}</a>.
+                  {status.message} &nbsp;· Or{" "}
+                  <a href={buildMailto(form)}>open the message in your mail app</a>.
                 </p>
               ) : null}
 
