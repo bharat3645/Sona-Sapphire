@@ -347,9 +347,9 @@ export const MARQUEE: readonly string[] = [
 ];
 
 export const SOCIALS: readonly SocialDef[] = [
-  { kind: "instagram", label: "Instagram", handle: "@sonasapphire", href: "https://www.instagram.com/sonasapphire" },
-  { kind: "youtube",   label: "YouTube",   handle: "@sonasapphire", href: "https://www.youtube.com/@sonasapphire" },
-  { kind: "linkedin",  label: "LinkedIn",  handle: "Sona Sapphire", href: "https://www.linkedin.com/company/sona-sapphire" },
+  { kind: "instagram", label: "Instagram", handle: "@sonasapphiregs", href: "https://www.instagram.com/sonasapphiregs" },
+  { kind: "youtube",   label: "YouTube",   handle: "@sonasapphire",   href: "https://www.youtube.com/@sonasapphire" },
+  { kind: "linkedin",  label: "LinkedIn",  handle: "Sona Sapphire",   href: "https://www.linkedin.com/company/sona-sapphire" },
 ] as const;
 
 export const SERVICE_TYPES = [

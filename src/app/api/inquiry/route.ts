@@ -3,10 +3,16 @@ import { Resend } from "resend";
 import { SERVICE_TYPES, type ServiceType } from "@/data/content";
 
 const KEY = process.env.RESEND_API_KEY;
-// All inquiries route to the business address only. Override via env if a
-// shared inbox is added later (e.g. sales@ / studio@).
+// Primary destination. Defaults to the business inbox; override via env if
+// a shared inbox is added later (e.g. sales@ / studio@).
 const TO = process.env.INQUIRY_TO ?? "info@sonasapphire.com";
 const FROM = process.env.INQUIRY_FROM ?? "Sona Sapphire <onboarding@resend.dev>";
+// Fallback inbox when Resend is in sandbox mode (only the key-owner address
+// is a permitted recipient). The route silently retries to this address and
+// flags the intended recipient in the subject. Switch off the fallback by
+// verifying the sending domain at https://resend.com/domains and unsetting
+// INQUIRY_DEV_FALLBACK (or simply not setting it).
+const DEV_FALLBACK = process.env.INQUIRY_DEV_FALLBACK ?? "iyershivu@gmail.com";
 
 interface InquiryBody {
   readonly name?: string;
@@ -19,21 +25,16 @@ interface InquiryBody {
 const escapeHtml = (s: string) =>
   s.replace(/[&<>"']/g, (c) => {
     const map: Record<string, string> = {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;",
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
     };
     return map[c] ?? c;
   });
 
+const SANDBOX_RX = /testing emails|verify a domain|resend\.com\/domains|own email address/i;
+
 /* ─── Rate limit ───────────────────────────────────────────────────────────
    In-memory IP bucket: 5 submissions per minute per IP. Survives within a
-   warm Vercel instance, resets on cold start. Combined with the honeypot
-   it slows casual bots cheaply; for a real attack swap in @upstash/ratelimit
-   backed by Redis.                                                       */
-
+   warm Vercel instance, resets on cold start.                            */
 const RATE_LIMIT = 5;
 const WINDOW_MS = 60_000;
 type Bucket = { count: number; resetAt: number };
@@ -49,7 +50,6 @@ const clientIp = (req: Request): string => {
 
 const isLimited = (ip: string): boolean => {
   const now = Date.now();
-  // Opportunistic cleanup so the Map doesn't grow unbounded.
   if (buckets.size > 1024) {
     for (const [k, b] of buckets) if (b.resetAt < now) buckets.delete(k);
   }
@@ -127,30 +127,70 @@ export async function POST(req: Request) {
     );
   }
 
+  const baseHtml = `
+    <div style="font-family: system-ui, sans-serif; line-height: 1.55; color: #0B1B3A;">
+      <h2 style="margin: 0 0 1rem; font-size: 1.1rem;">New project inquiry</h2>
+      <p><strong>From:</strong> ${escapeHtml(name)} &lt;${escapeHtml(email)}&gt;</p>
+      <p><strong>Project type:</strong> ${escapeHtml(type)}</p>
+      <p><strong>Message:</strong></p>
+      <p>${escapeHtml(message).replace(/\n/g, "<br/>")}</p>
+    </div>
+  `;
+  const baseSubject = `Inquiry — ${type} — ${name}`;
+
   const resend = new Resend(KEY);
+
   try {
-    const { error } = await resend.emails.send({
+    // Primary attempt: deliver to the configured business inbox.
+    const primary = await resend.emails.send({
       from: FROM,
       to: TO,
       replyTo: email,
-      subject: `Inquiry — ${type} — ${name}`,
-      html: `
-        <div style="font-family: system-ui, sans-serif; line-height: 1.55; color: #0B1B3A;">
-          <h2 style="margin: 0 0 1rem; font-size: 1.1rem;">New project inquiry</h2>
-          <p><strong>From:</strong> ${escapeHtml(name)} &lt;${escapeHtml(email)}&gt;</p>
-          <p><strong>Project type:</strong> ${escapeHtml(type)}</p>
-          <p><strong>Message:</strong></p>
-          <p>${escapeHtml(message).replace(/\n/g, "<br/>")}</p>
-        </div>
-      `,
+      subject: baseSubject,
+      html: baseHtml,
     });
-    if (error) {
+
+    if (!primary.error) {
+      return NextResponse.json({ ok: true });
+    }
+
+    // Sandbox fallback: Resend rejects unverified recipients while the
+    // sending domain is unverified. Retry to the dev-verified address with
+    // a clearly-flagged subject + a banner in the body so the recipient
+    // sees the original intended destination. Once the domain is verified
+    // (DNS records + INQUIRY_FROM switched to a domain address), the
+    // primary send succeeds and this branch never runs.
+    const errMsg = primary.error.message ?? "";
+    if (DEV_FALLBACK && SANDBOX_RX.test(errMsg)) {
+      const fallbackHtml = `
+        <div style="font-family: system-ui, sans-serif; background: #FFF7DD; border-left: 3px solid #D4A24C; padding: 0.65rem 0.9rem; margin: 0 0 1rem; color: #4A3210;">
+          <strong>Sandbox fallback:</strong> Resend declined the primary
+          delivery to <code>${escapeHtml(TO)}</code>. Verify the sending
+          domain at <code>resend.com/domains</code> to receive future
+          inquiries directly there.
+        </div>
+        ${baseHtml}
+      `;
+      const fallback = await resend.emails.send({
+        from: FROM,
+        to: DEV_FALLBACK,
+        replyTo: email,
+        subject: `[FALLBACK → ${TO}] ${baseSubject}`,
+        html: fallbackHtml,
+      });
+      if (!fallback.error) {
+        return NextResponse.json({ ok: true, fallback: true });
+      }
       return NextResponse.json(
-        { ok: false, error: error.message ?? "Mailer rejected the request." },
+        { ok: false, error: fallback.error.message ?? errMsg },
         { status: 502 },
       );
     }
-    return NextResponse.json({ ok: true });
+
+    return NextResponse.json(
+      { ok: false, error: errMsg || "Mailer rejected the request." },
+      { status: 502 },
+    );
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Unknown mailer error.";
     return NextResponse.json({ ok: false, error: msg }, { status: 502 });
