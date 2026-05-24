@@ -12,7 +12,7 @@ const FROM = process.env.INQUIRY_FROM ?? "Sona Sapphire <onboarding@resend.dev>"
 // flags the intended recipient in the subject. Switch off the fallback by
 // verifying the sending domain at https://resend.com/domains and unsetting
 // INQUIRY_DEV_FALLBACK (or simply not setting it).
-const DEV_FALLBACK = process.env.INQUIRY_DEV_FALLBACK ?? "iyershivu@gmail.com";
+const DEV_FALLBACK = process.env.INQUIRY_DEV_FALLBACK ?? "sonasapphiregs@gmail.com";
 
 interface InquiryBody {
   readonly name?: string;
