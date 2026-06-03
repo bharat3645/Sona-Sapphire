@@ -1,15 +1,17 @@
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sona-sapphire.vercel.app";
+  const base =
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://sona-sapphire.vercel.app";
   return {
     rules: [
       {
         userAgent: "*",
-        allow: "/",
+        allow: ["/", "/videos/", "/brand/", "/team/"],
         disallow: ["/api/"],
       },
     ],
     sitemap: `${base}/sitemap.xml`,
+    host: base,
   };
 }

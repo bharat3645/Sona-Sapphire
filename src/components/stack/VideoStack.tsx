@@ -22,11 +22,12 @@ export function VideoStack() {
           ))}
         </div>
 
-        <h1
-          className="stack__wordmark"
-          aria-label="Sona Sapphire Global Solutions"
-        >
-          Sapphire
+        <h1 className="stack__wordmark">
+          <span className="sr-only">
+            Sona Sapphire Global Solutions — Cinematic advertisement videos,
+            social media handling, website development, and brand development.
+          </span>
+          <span aria-hidden="true">Sapphire</span>
         </h1>
 
         <div className="stack__hud">
