@@ -7,12 +7,15 @@ const KEY = process.env.RESEND_API_KEY;
 // a shared inbox is added later (e.g. sales@ / studio@).
 const TO = process.env.INQUIRY_TO ?? "info@sonasapphire.com";
 const FROM = process.env.INQUIRY_FROM ?? "Sona Sapphire <onboarding@resend.dev>";
-// Fallback inbox when Resend is in sandbox mode (only the key-owner address
-// is a permitted recipient). The route silently retries to this address and
-// flags the intended recipient in the subject. Switch off the fallback by
-// verifying the sending domain at https://resend.com/domains and unsetting
-// INQUIRY_DEV_FALLBACK (or simply not setting it).
-const DEV_FALLBACK = process.env.INQUIRY_DEV_FALLBACK ?? "iyershivu@gmail.com";
+// Optional fallback inbox for while Resend is in sandbox mode (only the
+// key-owner address is a permitted recipient there). Unset by default: a
+// sandbox-blocked send just fails honestly (502) so the visitor sees the
+// "email us directly" fallback instead of a false success. To opt in for
+// local/dev testing, set INQUIRY_DEV_FALLBACK to an address you control —
+// never set it in production without telling whoever's inbox it points at.
+// Verifying the sending domain at https://resend.com/domains makes this
+// branch stop being reachable at all.
+const DEV_FALLBACK = process.env.INQUIRY_DEV_FALLBACK;
 
 interface InquiryBody {
   readonly name?: string;
@@ -155,11 +158,12 @@ export async function POST(req: Request) {
     }
 
     // Sandbox fallback: Resend rejects unverified recipients while the
-    // sending domain is unverified. Retry to the dev-verified address with
-    // a clearly-flagged subject + a banner in the body so the recipient
-    // sees the original intended destination. Once the domain is verified
-    // (DNS records + INQUIRY_FROM switched to a domain address), the
-    // primary send succeeds and this branch never runs.
+    // sending domain is unverified. Only reachable when INQUIRY_DEV_FALLBACK
+    // is explicitly set (see comment above) — retries to the dev-verified
+    // address with a clearly-flagged subject + a banner in the body so the
+    // recipient sees the original intended destination. Once the domain is
+    // verified (DNS records + INQUIRY_FROM switched to a domain address),
+    // the primary send succeeds and this branch never runs.
     const errMsg = primary.error.message ?? "";
     if (DEV_FALLBACK && SANDBOX_RX.test(errMsg)) {
       const fallbackHtml = `

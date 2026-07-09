@@ -40,11 +40,14 @@ export function InquirySection() {
         .catch(() => ({}))) as { ok?: boolean; error?: string };
       if (!res.ok || !json.ok) {
         const raw = json.error ?? `Submission failed (${res.status}).`;
-        // Resend sandbox-mode rejection — surface a clean fallback instead
-        // of the raw "verify a domain at resend.com/domains" message.
-        const friendly = /testing emails|verify a domain|resend\.com\/domains/i.test(raw)
-          ? "We're finalising the mailer setup. Please email us at info@sonasapphire.com or call +91 88818 57060 — we'll reply within 24 hours."
-          : raw;
+        // Mailer/server-side failures (not configured, sandbox-blocked, send
+        // rejected) are internal details — show the business-friendly
+        // fallback. Validation (400) and rate-limit (429) messages are
+        // already user-actionable, so show those as-is.
+        const friendly =
+          res.status === 503 || res.status === 502
+            ? `We're finalising the mailer setup. Please email us at ${CONTACT.email} or call ${CONTACT.phone} — we'll reply within 24 hours.`
+            : raw;
         setStatus({ kind: "error", message: friendly });
         return;
       }
