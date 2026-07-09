@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 /**
- * Fetches four CC0 cinematic clips from Mixkit into public/videos/
- * (intentionally swappable: drop any reel-N.mp4 in place to override).
+ * Fetches CC0 cinematic clips from Mixkit into public/videos/ as visual
+ * filler while real client cuts are pending (intentionally swappable: drop
+ * any reel-N.mp4 in place to override).
+ *
+ * Currently matches the two reels wired in src/data/content.ts (REELS).
+ * If you add a reel-3 / reel-4 entry to REELS, add a matching { id, url }
+ * pair below - pick a distinct Mixkit clip for each, not the same URL twice.
  *
  * Usage: pnpm fetch:stock
  */
@@ -21,14 +26,6 @@ const REELS = [
   {
     id: "reel-2",
     url: "https://assets.mixkit.co/videos/2783/2783-720.mp4",
-  },
-  {
-    id: "reel-3",
-    url: "https://assets.mixkit.co/videos/4434/4434-720.mp4",
-  },
-  {
-    id: "reel-4",
-    url: "https://assets.mixkit.co/videos/4434/4434-720.mp4",
   },
 ];
 
