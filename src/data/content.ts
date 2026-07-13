@@ -329,7 +329,7 @@ export const STATS: readonly StatDef[] = [
 ] as const;
 
 export const ABOUT_BODY =
-  "Sona Sapphire is a creative-and-growth studio working at the intersection of cinema and analytics. We pair frame-perfect storytelling with the operating systems — funnels, content engines, websites — that turn attention into revenue.";
+  "Sona Sapphire is a creative-and-growth studio based in India, working at the intersection of cinema and analytics for brands worldwide. We pair frame-perfect storytelling with the operating systems — funnels, content engines, websites — that turn attention into revenue.";
 
 export const QUOTE = {
   body:

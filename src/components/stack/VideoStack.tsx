@@ -24,7 +24,7 @@ export function VideoStack() {
 
         <h1
           className="stack__wordmark"
-          aria-label="Sona Sapphire Global Solutions"
+          aria-label="Sona Sapphire Global Solutions — Creative & Growth Agency in India"
         >
           Sapphire
         </h1>

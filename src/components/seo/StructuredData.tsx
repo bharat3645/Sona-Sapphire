@@ -24,6 +24,10 @@ export function StructuredData() {
         description:
           "A creative-and-growth studio for brands that refuse the average. Cinematic ads, social systems, websites, and brand — built end to end.",
         foundingDate: "2024",
+        address: {
+          "@type": "PostalAddress",
+          addressCountry: "IN",
+        },
         contactPoint: {
           "@type": "ContactPoint",
           telephone: CONTACT.phone,
@@ -60,7 +64,10 @@ export function StructuredData() {
           "@type": "PostalAddress",
           addressCountry: "IN",
         },
-        areaServed: { "@type": "Country", name: "Worldwide" },
+        areaServed: [
+          { "@type": "Country", name: "India" },
+          { "@type": "Country", name: "Worldwide" },
+        ],
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: "Practices",

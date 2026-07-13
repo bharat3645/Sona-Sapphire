@@ -27,28 +27,31 @@ const SITE_URL =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${CONTACT.legal} — Digital Growth · Creative Media · Web Solutions`,
+    default: `${CONTACT.legal} — Video Production, Social Media & Web Design Agency in India`,
     template: "%s — Sona Sapphire",
   },
   description:
-    "Sona Sapphire Global Solutions engineers cinematic ads, social systems, and high-conversion websites for brands that refuse the average.",
+    "Sona Sapphire Global Solutions is a creative-and-growth agency in India engineering cinematic ad films, social media growth, and high-conversion websites for brands worldwide.",
   applicationName: CONTACT.legal,
   authors: [{ name: CONTACT.legal }],
   keywords: [
-    "creative media agency",
-    "digital growth",
-    "advertisement videos",
-    "social media management",
-    "website development",
+    "creative agency India",
+    "video production company India",
+    "advertisement video production India",
+    "social media marketing agency India",
+    "website development company India",
+    "brand development agency India",
+    "digital growth agency",
     "Sona Sapphire",
   ],
   openGraph: {
     type: "website",
     title: `${CONTACT.legal} — Cinematic creative · Measurable growth`,
     description:
-      "Cinematic ads, social systems, websites, and brand — built end to end.",
+      "Cinematic ads, social systems, websites, and brand — built end to end from India, for brands worldwide.",
     siteName: CONTACT.legal,
-    locale: "en_US",
+    locale: "en_IN",
+    countryName: "India",
   },
   twitter: {
     card: "summary_large_image",
@@ -59,6 +62,11 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: "/" },
   formatDetection: { telephone: false, email: false, address: false },
+  manifest: "/site.webmanifest",
+  other: {
+    "geo.region": "IN",
+    "geo.placename": "India",
+  },
 };
 
 export const viewport: Viewport = {
